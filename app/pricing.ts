@@ -3,7 +3,7 @@ export const products = [
     name: "Hobby",
     description: "For personal projects and small-scale applications.",
     price: "Free",
-    // color: "bg-blue-500",
+    color: "bg-blue-500",
     priceNote: "up to 3 users",
     purchaseButtonText: "Start deploying",
     items: [
@@ -37,11 +37,11 @@ export const products = [
     everythingFrom: "Hobby",
     items: [
       {
-        text: "500 GB of bandwidth included",
-      },
-      {
         text: "10 team members included",
         price: "Then $20 per member",
+      },
+      {
+        text: "500 GB of bandwidth included",
       },
       {
         text: "Unlimited projects & environments",

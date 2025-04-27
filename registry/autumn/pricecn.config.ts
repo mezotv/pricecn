@@ -7,6 +7,11 @@ export interface Product {
     secondaryText?: string;
   };
 
+  priceAnnual?: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+
   everythingFrom?: string;
   buttonText?: string;
   recommendText?: string;
@@ -50,6 +55,10 @@ export const products: Product[] = [
     price: {
       primaryText: "$19",
       secondaryText: "per user/month plus compute costs*",
+    },
+    priceAnnual: {
+      primaryText: "$190",
+      secondaryText: "per user/year plus compute costs*",
     },
     buttonText: "Select plan",
     everythingFrom: "Hobby",

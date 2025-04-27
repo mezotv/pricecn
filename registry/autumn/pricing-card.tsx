@@ -8,44 +8,57 @@ interface PricingCardProps {
   product: Product;
   font: string;
   showFeatures: boolean;
+  isAnnual?: boolean;
 }
 
 export const PricingCardBasic = ({
   product,
   showFeatures,
+  isAnnual,
 }: PricingCardProps) => {
-  const { name, price, recommendText, buttonText, items } = product;
+  const { name, price, priceAnnual, recommendText, buttonText, items } =
+    product;
   return (
-    <div
-      className={cn(
-        "h-full outline shadow-inner outline-1 outline-border flex flex-col h-full text-foreground p-6",
-        recommendText && "bg-stone-100 dark:bg-zinc-900"
-      )}
-    >
-      <div className="">
-        <h2 className="text-2xl font-bold">{name}</h2>
-        <div className="mt-2">
-          <h3 className="font-semibold text-md">
-            {price.primaryText}{" "}
-            {price.secondaryText && (
-              <span className="font-normal text-muted-foreground mt-1">
-                {price.secondaryText}
-              </span>
-            )}
-          </h3>
+    <div className={cn("w-full h-full")}>
+      <div
+        className={cn(
+          "h-full flex flex-col text-foreground p-6",
+          recommendText &&
+            "bg-stone-100 dark:bg-zinc-900 lg:outline lg:outline-1 lg:outline-border lg:-translate-y-8 lg:rounded-xl lg:pt-14 lg:pb-14 lg:h-[calc(100%+64px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800"
+        )}
+      >
+        <div className="flex flex-col h-full flex-grow">
+          <div className="">
+            <h2 className="text-2xl font-bold">{name}</h2>
+            <div className="mt-2">
+              <h3 className="font-semibold text-md">
+                {isAnnual && priceAnnual
+                  ? priceAnnual?.primaryText
+                  : price.primaryText}{" "}
+                {price.secondaryText && (
+                  <span className="font-normal text-muted-foreground mt-1">
+                    {isAnnual && priceAnnual
+                      ? priceAnnual?.secondaryText
+                      : price.secondaryText}
+                  </span>
+                )}
+              </h3>
+            </div>
+          </div>
+          {showFeatures && (
+            <div className="flex-grow">
+              <PricingFeatureList items={items} showIcon={true} />
+            </div>
+          )}
+          <div className={cn("mt-2", recommendText && "")}>
+            <PricingCardButton
+              recommended={recommendText ? true : false}
+              priceVariant="basic"
+            >
+              {buttonText}
+            </PricingCardButton>
+          </div>
         </div>
-      </div>
-
-      {showFeatures && (
-        <div className="flex-grow">
-          <PricingFeatureList items={items} showIcon={true} />
-        </div>
-      )}
-
-      <div className="mt-2">
-        <PricingCardButton recommended={recommendText ? true : false}>
-          {buttonText}
-        </PricingCardButton>
       </div>
     </div>
   );
@@ -83,7 +96,10 @@ export const PricingCardDev = ({
         </div>
 
         <div className="p-2">
-          <PricingCardButton recommended={recommendText ? true : false}>
+          <PricingCardButton
+            recommended={recommendText ? true : false}
+            priceVariant="dev"
+          >
             {buttonText}
           </PricingCardButton>
         </div>

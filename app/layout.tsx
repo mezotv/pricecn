@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { RootProvider } from "fumadocs-ui/provider";
-// import "fumadocs-ui/css/neutral.css";
-// import "fumadocs-ui/css/preset.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <RootProvider>{children}</RootProvider>
+        {children}
       </body>
     </html>
   );

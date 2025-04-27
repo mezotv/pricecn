@@ -13,7 +13,7 @@ const spaceMono = Space_Mono({
 });
 
 const plansContainerVariant = cva(
-  " relative bg-white rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]",
+  "relative bg-white rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]",
   {
     variants: {
       variant: {

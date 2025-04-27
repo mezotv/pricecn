@@ -5,7 +5,8 @@
   "title": "Hello World",
   "description": "A simple hello world component",
   "registryDependencies": [
-    "button"
+    "button",
+    "http://localhost:3000/r/example-form.json"
   ],
   "files": [
     {

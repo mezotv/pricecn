@@ -1,15 +1,14 @@
 "use client";
 import * as React from "react";
 // import { OpenInV0Button } from "@/components/open-in-v0-button";
-import { AnnualSwitch, Pricing } from "@/registry/autumn/pricing";
-import { products } from "@/registry/autumn/pricecn.config";
+
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CommandBar } from "@/components/command-bar";
 import { Geist_Mono, Geist } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
-import { PricingCard, PricingTable } from "@/registry/autumn/pricing-card";
+import { PricingCard, PricingTable } from "@/registry/autumn/pricing-table";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],

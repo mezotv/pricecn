@@ -20,10 +20,10 @@ export function CommandBar() {
     <div className="relative group">
       {/* Gradient border container */}
       <div
-        className="absolute -inset-[1.8px] rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300
+        className="absolute -inset-[1.8px] rounded-md opacity-100 transition-opacity duration-300
         before:absolute before:inset-0 before:rounded-md
         before:bg-gradient-to-r before:from-transparent before:via-gray-400/60 before:to-transparent dark:before:via-gray-300/40
-        before:animate-none group-hover:before:animate-shine before:bg-[length:200%_100%]"
+         before:animate-shine before:bg-[length:200%_100%]"
       />
 
       <button
@@ -34,11 +34,11 @@ export function CommandBar() {
           shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] 
           dark:shadow-[inset_0_1px_4px_rgba(0,0,0,0.6)]
           transition-all duration-300 ease-out
-          hover:border-transparent
+          border-transparent
           before:absolute before:inset-0 
           before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,0)_var(--mouse-y,0),rgba(255,255,255,0.06),transparent_40%)]
           dark:before:bg-[radial-gradient(800px_circle_at_var(--mouse-x,0)_var(--mouse-y,0),rgba(255,255,255,0.03),transparent_40%)]
-          before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500"
+          before:opacity-100 before:transition-opacity before:duration-500"
         onMouseMove={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           e.currentTarget.style.setProperty(

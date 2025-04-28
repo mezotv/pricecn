@@ -42,7 +42,7 @@ export default function Home() {
               onClick={() => {
                 document.documentElement.classList.toggle("dark");
               }}
-              className="relative w-10 h-10 p-0"
+              className="relative w-9 h-9 p-0"
             >
               <span className="sr-only">Toggle theme</span>
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -76,6 +76,7 @@ export default function Home() {
             /> */}
             <PricingTable variant={variant as "basic" | "dev"}>
               <PricingCard productId="hobby" />
+              <PricingCard productId="professional" />
               <PricingCard productId="organization" />
               <PricingCard productId="enterprise" />
             </PricingTable>

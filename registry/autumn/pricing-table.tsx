@@ -23,7 +23,7 @@ const PricingTableContext = createContext<PricingTableContextType>({
 });
 
 const pricingTableVariant = cva(
-  "bg-white grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col border ",
+  "bg-white grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col border",
   {
     variants: {
       variant: {
@@ -118,42 +118,52 @@ export const PricingCardBasic = ({
 
   const { isAnnual } = usePricingTableContext("PricingCardBasic");
 
-  const { name, price, priceAnnual, recommendText, buttonText, items } =
-    product;
+  const {
+    name,
+    price,
+    priceAnnual,
+    recommendText,
+    buttonText,
+    items,
+    description,
+  } = product;
 
   return (
     <div className={cn(className, "w-full h-full")}>
       <div
         className={cn(
-          "h-full flex flex-col text-foreground p-6",
+          "h-full flex flex-col text-foreground py-6",
           recommendText &&
-            "bg-stone-100 dark:bg-zinc-900 lg:outline lg:outline-1 lg:outline-border lg:-translate-y-8 lg:rounded-xl lg:pt-14 lg:pb-14 lg:h-[calc(100%+64px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800"
+            "bg-stone-100 dark:bg-zinc-900 lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:pt-12 lg:pb-12 lg:h-[calc(100%+48px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800"
         )}
       >
         <div className="flex flex-col h-full flex-grow">
-          <div className="">
-            <h2 className="text-2xl font-bold">{name}</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-2xl font-bold px-6">{name}</h2>
+            <span className="text-sm text-muted-foreground px-6">{""}</span>
             <div className="mt-2">
-              <h3 className="font-semibold text-md">
-                {isAnnual && priceAnnual
-                  ? priceAnnual?.primaryText
-                  : price.primaryText}{" "}
-                {price.secondaryText && (
-                  <span className="font-normal text-muted-foreground mt-1">
-                    {isAnnual && priceAnnual
-                      ? priceAnnual?.secondaryText
-                      : price.secondaryText}
-                  </span>
-                )}
+              <h3 className="font-semibold text-md border-y h-16 flex items-center px-6">
+                <div>
+                  {isAnnual && priceAnnual
+                    ? priceAnnual?.primaryText
+                    : price.primaryText}{" "}
+                  {price.secondaryText && (
+                    <span className="font-normal text-muted-foreground mt-1">
+                      {isAnnual && priceAnnual
+                        ? priceAnnual?.secondaryText
+                        : price.secondaryText}
+                    </span>
+                  )}
+                </div>
               </h3>
             </div>
           </div>
           {showFeatures && (
-            <div className="flex-grow">
+            <div className="flex-grow px-6">
               <PricingFeatureList items={items} showIcon={true} />
             </div>
           )}
-          <div className={cn("mt-2", recommendText && "")}>
+          <div className={cn("mt-2 px-6", recommendText && "")}>
             <PricingCardButton
               recommended={recommendText ? true : false}
               priceVariant="basic"

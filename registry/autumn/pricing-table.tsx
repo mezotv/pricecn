@@ -23,12 +23,12 @@ const PricingTableContext = createContext<PricingTableContextType>({
 });
 
 const pricingTableVariant = cva(
-  "bg-white grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col border",
+  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col border",
   {
     variants: {
       variant: {
         basic:
-          "rounded-xl border overflow-hidden lg:overflow-visible divide-x divide-y lg:divide-y-0 bg-gradient-to-br from-zinc-50 to-white dark:from-background/95 dark:to-background dark:shadow-zinc-800 shadow-inner",
+          "bg-white rounded-xl border overflow-hidden lg:overflow-visible lg:space-x-[-1px] bg-gradient-to-br from-zinc-50 to-white dark:from-background/95 dark:to-background dark:shadow-zinc-800 shadow-inner",
 
         dev: "gap-[2px]",
       },
@@ -129,50 +129,58 @@ export const PricingCardBasic = ({
   } = product;
 
   return (
-    <div className={cn(className, "w-full h-full")}>
-      <div
+    <div
+      className={cn(
+        "w-full h-full border lg:border-y-0 lg:first:border-l-0 lg:last:border-r-0 py-6 text-foreground",
+        recommendText &&
+          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:h-[calc(100%+48px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800  lg:pt-12 lg:pb-12 bg-stone-100 dark:bg-zinc-900",
+        className
+      )}
+    >
+      {/* <div
         className={cn(
           "h-full flex flex-col text-foreground py-6",
-          recommendText &&
-            "bg-stone-100 dark:bg-zinc-900 lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:pt-12 lg:pb-12 lg:h-[calc(100%+48px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800"
+          recommendText && ""
         )}
-      >
-        <div className="flex flex-col h-full flex-grow">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-bold px-6">{name}</h2>
-            <span className="text-sm text-muted-foreground px-6">{""}</span>
-            <div className="mt-2">
-              <h3 className="font-semibold text-md border-y h-16 flex items-center px-6">
-                <div>
-                  {isAnnual && priceAnnual
-                    ? priceAnnual?.primaryText
-                    : price.primaryText}{" "}
-                  {price.secondaryText && (
-                    <span className="font-normal text-muted-foreground mt-1">
-                      {isAnnual && priceAnnual
-                        ? priceAnnual?.secondaryText
-                        : price.secondaryText}
-                    </span>
-                  )}
-                </div>
-              </h3>
-            </div>
-          </div>
-          {showFeatures && (
-            <div className="flex-grow px-6">
-              <PricingFeatureList items={items} showIcon={true} />
-            </div>
-          )}
-          <div className={cn("mt-2 px-6", recommendText && "")}>
-            <PricingCardButton
-              recommended={recommendText ? true : false}
-              priceVariant="basic"
-            >
-              {buttonText}
-            </PricingCardButton>
+      > */}
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-bold px-6 ">{name}</h2>
+          <span className="text-sm text-muted-foreground px-6 h-12">
+            {description}
+          </span>
+          <div className="mt-2">
+            <h3 className="font-semibold text-md border-y h-16 flex items-center px-6">
+              <div>
+                {isAnnual && priceAnnual
+                  ? priceAnnual?.primaryText
+                  : price.primaryText}{" "}
+                {price.secondaryText && (
+                  <span className="font-normal text-muted-foreground mt-1">
+                    {isAnnual && priceAnnual
+                      ? priceAnnual?.secondaryText
+                      : price.secondaryText}
+                  </span>
+                )}
+              </div>
+            </h3>
           </div>
         </div>
+        {showFeatures && (
+          <div className="flex-grow px-6">
+            <PricingFeatureList items={items} showIcon={true} />
+          </div>
+        )}
+        <div className={cn("mt-4 px-6", recommendText && "")}>
+          <PricingCardButton
+            recommended={recommendText ? true : false}
+            priceVariant="basic"
+          >
+            {buttonText}
+          </PricingCardButton>
+        </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };
@@ -194,7 +202,7 @@ export const PricingCardDev = ({
     <div
       className={cn(
         className,
-        "w-full h-full outline outline-white relative flex flex-col rounded-none z-0 text-foreground isolation-auto"
+        "w-full h-full outline outline-white relative flex flex-col rounded-none z-0 text-foreground"
       )}
     >
       {recommendText && (
@@ -203,11 +211,11 @@ export const PricingCardDev = ({
 
       <div className="bg-background h-full">
         <div className={`flex flex-col gap-2 bg-primary/30 saturate-150 p-6`}>
-          <h2 className={`text-xl`}>{name}</h2>
+          <h2 className={`text-xl font-mono`}>{name}</h2>
           <p className="text-sm h-12">{description}</p>
         </div>
         <div className="h-28 p-6 overflow-hidden">
-          <h3 className={`text-3xl truncate`}>{price.primaryText}</h3>
+          <h3 className={`text-3xl truncate font-mono`}>{price.primaryText}</h3>
           {price.secondaryText && (
             <p className="text-sm text-muted-foreground mt-1">
               {price.secondaryText}
@@ -288,16 +296,23 @@ export const PricingCardButton = React.forwardRef<
   return (
     <Button
       className={cn(
-        "w-full py-3 px-4 rounded-none flex items-center justify-between",
+        "w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90",
         priceVariant === "basic" &&
-          "outline outline-1 outline-border rounded-lg"
+          "outline outline-1 outline-border rounded-lg",
+        priceVariant === "dev" && "font-mono"
       )}
       variant={recommended ? "default" : "secondary"}
       {...props}
       ref={ref}
     >
-      <span>{children}</span>
-      <span className="text-sm">→</span>
+      <div className="flex items-center justify-between w-full transition-transform duration-300 group-hover:translate-x-[120%]">
+        <span>{children}</span>
+        <span className="text-sm">→</span>
+      </div>
+      <div className="flex items-center justify-between w-full absolute px-4 -translate-x-full transition-transform duration-300 group-hover:translate-x-0">
+        <span>{children}</span>
+        <span className="text-sm">→</span>
+      </div>
     </Button>
   );
 });

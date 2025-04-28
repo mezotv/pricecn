@@ -24,7 +24,7 @@ export default function Home() {
   const [variant, setVariant] = React.useState("basic");
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center bg-[#f9f9f9] dark:bg-zinc-900">
+    <div className="h-full w-screen flex flex-col justify-center items-center bg-[#f9f9f9] dark:bg-zinc-900">
       <div className="h-full w-full flex flex-col items-center gap-4">
         <div className="px-8 py-4 flex w-full justify-between items-center">
           <div className={`${geistMono.className} text-2xl font-bold`}>
@@ -74,11 +74,16 @@ export default function Home() {
               products={products}
               variant={variant as "basic" | "dev"}
             /> */}
-            <PricingTable variant={variant as "basic" | "dev"}>
-              <PricingCard productId="hobby" />
-              <PricingCard productId="professional" />
-              <PricingCard productId="organization" />
-              <PricingCard productId="enterprise" />
+
+            <PricingTable variant={variant as "basic" | "dev"} className="">
+              <PricingCard productId="hobby" showFeatures={false} />
+              <PricingCard productId="professional" showFeatures={false} />
+              <PricingCard
+                productId="organization"
+                className=""
+                showFeatures={false}
+              />
+              <PricingCard productId="enterprise" showFeatures={false} />
             </PricingTable>
           </Tabs>
         </div>

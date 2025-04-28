@@ -3,23 +3,25 @@
 import { createContext, useContext, useState } from "react";
 import { cn } from "@/lib/utils";
 
-import { products } from "./pricecn.config";
+import { products as defaultProducts } from "./pricecn.config";
 import { cva } from "class-variance-authority";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 
 interface PricingTableContextType {
   isAnnual: boolean;
   setIsAnnual: (isAnnual: boolean) => void;
   variant: "basic" | "dev";
+  products: typeof defaultProducts;
 }
 
 const PricingTableContext = createContext<PricingTableContextType>({
   isAnnual: false,
   setIsAnnual: () => {},
   variant: "basic",
+  products: defaultProducts,
 });
 
 const pricingTableVariant = cva(
@@ -50,15 +52,24 @@ export const PricingTable = ({
   children,
   className,
   variant = "basic",
+  products = defaultProducts,
 }: {
   children: React.ReactNode;
   className?: string;
   variant?: "basic" | "dev";
+  products?: typeof defaultProducts;
 }) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
-    <PricingTableContext.Provider value={{ isAnnual, setIsAnnual, variant }}>
+    <PricingTableContext.Provider
+      value={{
+        isAnnual,
+        setIsAnnual,
+        variant,
+        products: products || defaultProducts || [],
+      }}
+    >
       <div className={cn("flex items-center flex-col")}>
         {products.some((p) => p.priceAnnual) && (
           <div className={cn(products.some((p) => p.recommendText) && "mb-8")}>
@@ -77,6 +88,7 @@ interface PricingCardProps {
   productId: string;
   showFeatures?: boolean;
   className?: string;
+  onButtonClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 // Pricing Card
@@ -84,6 +96,7 @@ export const PricingCard = ({
   productId,
   showFeatures = true,
   className,
+  onButtonClick,
 }: PricingCardProps) => {
   const { variant } = usePricingTableContext("PricingCard");
 
@@ -93,6 +106,7 @@ export const PricingCard = ({
         productId={productId}
         showFeatures={showFeatures}
         className={className}
+        onButtonClick={onButtonClick}
       />
     );
   } else if (variant === "dev") {
@@ -101,6 +115,7 @@ export const PricingCard = ({
         productId={productId}
         showFeatures={showFeatures}
         className={className}
+        onButtonClick={onButtonClick}
       />
     );
   }
@@ -110,13 +125,13 @@ export const PricingCardBasic = ({
   productId,
   showFeatures,
   className,
+  onButtonClick,
 }: PricingCardProps) => {
+  const { isAnnual, products } = usePricingTableContext("PricingCardBasic");
   const product = products.find((p) => p.id === productId);
   if (!product) {
     throw new Error(`Product with id ${productId} not found`);
   }
-
-  const { isAnnual } = usePricingTableContext("PricingCardBasic");
 
   const {
     name,
@@ -175,6 +190,7 @@ export const PricingCardBasic = ({
           <PricingCardButton
             recommended={recommendText ? true : false}
             priceVariant="basic"
+            onClick={onButtonClick}
           >
             {buttonText}
           </PricingCardButton>
@@ -189,7 +205,9 @@ export const PricingCardDev = ({
   productId,
   showFeatures,
   className,
+  onButtonClick,
 }: PricingCardProps) => {
+  const { products } = usePricingTableContext("PricingCardDev");
   const product = products.find((p) => p.id === productId);
   if (!product) {
     throw new Error(`Product with id ${productId} not found`);
@@ -227,6 +245,7 @@ export const PricingCardDev = ({
           <PricingCardButton
             recommended={recommendText ? true : false}
             priceVariant="dev"
+            onClick={onButtonClick}
           >
             {buttonText}
           </PricingCardButton>
@@ -293,6 +312,7 @@ export const PricingCardButton = React.forwardRef<
   HTMLButtonElement,
   PricingCardButtonProps
 >(({ recommended, children, priceVariant, ...props }, ref) => {
+  const [loading, setLoading] = useState(false);
   return (
     <Button
       className={cn(
@@ -304,15 +324,27 @@ export const PricingCardButton = React.forwardRef<
       variant={recommended ? "default" : "secondary"}
       {...props}
       ref={ref}
+      disabled={loading}
+      onClick={async (e) => {
+        setLoading(true);
+        await props.onClick?.(e);
+        setLoading(false);
+      }}
     >
-      <div className="flex items-center justify-between w-full transition-transform duration-300 group-hover:translate-x-[120%]">
-        <span>{children}</span>
-        <span className="text-sm">→</span>
-      </div>
-      <div className="flex items-center justify-between w-full absolute px-4 -translate-x-full transition-transform duration-300 group-hover:translate-x-0">
-        <span>{children}</span>
-        <span className="text-sm">→</span>
-      </div>
+      {loading ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <>
+          <div className="flex items-center justify-between w-full transition-transform duration-300 group-hover:translate-x-[120%]">
+            <span>{children}</span>
+            <span className="text-sm">→</span>
+          </div>
+          <div className="flex items-center justify-between w-full absolute px-4 -translate-x-full transition-transform duration-300 group-hover:translate-x-0">
+            <span>{children}</span>
+            <span className="text-sm">→</span>
+          </div>
+        </>
+      )}
     </Button>
   );
 });

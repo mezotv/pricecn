@@ -76,14 +76,10 @@ export default function Home() {
             /> */}
 
             <PricingTable variant={variant as "basic" | "dev"} className="">
-              <PricingCard productId="hobby" showFeatures={false} />
-              <PricingCard productId="professional" showFeatures={false} />
-              <PricingCard
-                productId="organization"
-                className=""
-                showFeatures={false}
-              />
-              <PricingCard productId="enterprise" showFeatures={false} />
+              <PricingCard productId="hobby" showFeatures={true} />
+              <PricingCard productId="professional" showFeatures={true} />
+              <PricingCard productId="organization" showFeatures={true} />
+              <PricingCard productId="enterprise" showFeatures={true} />
             </PricingTable>
           </Tabs>
         </div>

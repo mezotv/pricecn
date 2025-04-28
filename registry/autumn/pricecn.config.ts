@@ -15,6 +15,9 @@ export interface Product {
     primaryText: string;
     secondaryText?: string;
   }[];
+
+  // Pricing card actions
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export const products: Product[] = [

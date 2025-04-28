@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
-export interface PricingCardButtonProps extends ButtonProps {
+export interface PricingCardButtonProps extends React.ComponentProps<"button"> {
   recommended?: boolean;
 }
 

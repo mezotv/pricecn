@@ -43,7 +43,10 @@ export const PricingCardBasic = ({
       )}
 
       <div className="mt-2">
-        <PricingCardButton recommended={recommendText ? true : false}>
+        <PricingCardButton
+          recommended={recommendText ? true : false}
+          onClick={product.onClick}
+        >
           {buttonText}
         </PricingCardButton>
       </div>
@@ -83,7 +86,10 @@ export const PricingCardDev = ({
         </div>
 
         <div className="p-2">
-          <PricingCardButton recommended={recommendText ? true : false}>
+          <PricingCardButton
+            recommended={recommendText ? true : false}
+            onClick={product.onClick}
+          >
             {buttonText}
           </PricingCardButton>
         </div>

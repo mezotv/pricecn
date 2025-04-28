@@ -25,12 +25,12 @@ const PricingTableContext = createContext<PricingTableContextType>({
 });
 
 const pricingTableVariant = cva(
-  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col border",
+  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col",
   {
     variants: {
       variant: {
         basic:
-          "bg-white rounded-xl border overflow-hidden lg:overflow-visible lg:space-x-[-1px] bg-gradient-to-br from-zinc-50 to-white dark:from-background/95 dark:to-background dark:shadow-zinc-800 shadow-inner",
+          "bg-background rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner",
 
         dev: "gap-[2px]",
       },
@@ -146,9 +146,9 @@ export const PricingCardBasic = ({
   return (
     <div
       className={cn(
-        "w-full h-full border lg:border-y-0 lg:first:border-l-0 lg:last:border-r-0 py-6 text-foreground",
+        "w-full h-full border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px] py-6 text-foreground",
         recommendText &&
-          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:h-[calc(100%+48px)] lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800  lg:pt-12 lg:pb-12 bg-stone-100 dark:bg-zinc-900",
+          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900",
         className
       )}
     >
@@ -158,35 +158,46 @@ export const PricingCardBasic = ({
           recommendText && ""
         )}
       > */}
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-bold px-6 ">{name}</h2>
-          <span className="text-sm text-muted-foreground px-6 h-12">
-            {description}
-          </span>
-          <div className="mt-2">
-            <h3 className="font-semibold text-md border-y h-16 flex items-center px-6">
-              <div>
-                {isAnnual && priceAnnual
-                  ? priceAnnual?.primaryText
-                  : price.primaryText}{" "}
-                {price.secondaryText && (
-                  <span className="font-normal text-muted-foreground mt-1">
-                    {isAnnual && priceAnnual
-                      ? priceAnnual?.secondaryText
-                      : price.secondaryText}
-                  </span>
-                )}
-              </div>
-            </h3>
-          </div>
-        </div>
-        {showFeatures && (
-          <div className="flex-grow px-6">
-            <PricingFeatureList items={items} showIcon={true} />
-          </div>
+      <div
+        className={cn(
+          "flex flex-col h-full flex-grow",
+          recommendText && "lg:translate-y-6"
         )}
-        <div className={cn("mt-4 px-6", recommendText && "")}>
+      >
+        <div className="h-full">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-2xl font-bold px-6 ">{name}</h2>
+            {description && (
+              <span className="text-sm text-muted-foreground px-6 h-12">
+                {description}
+              </span>
+            )}
+            <div className="mt-2">
+              <h3 className="font-semibold text-md h-16 flex items-center px-6">
+                <div>
+                  {isAnnual && priceAnnual
+                    ? priceAnnual?.primaryText
+                    : price.primaryText}{" "}
+                  {price.secondaryText && (
+                    <span className="font-normal text-muted-foreground mt-1">
+                      {isAnnual && priceAnnual
+                        ? priceAnnual?.secondaryText
+                        : price.secondaryText}
+                    </span>
+                  )}
+                </div>
+              </h3>
+            </div>
+          </div>
+          {showFeatures && (
+            <div className="flex-grow px-6">
+              <PricingFeatureList items={items} showIcon={true} />
+            </div>
+          )}
+        </div>
+        <div
+          className={cn("mt-4 px-6 ", recommendText && "lg:-translate-y-12")}
+        >
           <PricingCardButton
             recommended={recommendText ? true : false}
             priceVariant="basic"
@@ -220,12 +231,10 @@ export const PricingCardDev = ({
     <div
       className={cn(
         className,
-        "w-full h-full outline outline-white relative flex flex-col rounded-none z-0 text-foreground"
+        "w-full h-full outline outline-background relative flex flex-col rounded-none z-0 text-foreground"
       )}
     >
-      {recommendText && (
-        <RecommendedBadge recommended={recommendText} position="top" />
-      )}
+      {recommendText && <RecommendedBadge recommended={recommendText} />}
 
       <div className="bg-background h-full">
         <div className={`flex flex-col gap-2 bg-primary/30 saturate-150 p-6`}>
@@ -335,11 +344,12 @@ export const PricingCardButton = React.forwardRef<
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
         <>
-          <div className="flex items-center justify-between w-full transition-transform duration-300 group-hover:translate-x-[120%]">
+          {" "}
+          <div className="flex items-center justify-between w-full transition-transform duration-300 group-hover:translate-y-[-130%]">
             <span>{children}</span>
             <span className="text-sm">→</span>
           </div>
-          <div className="flex items-center justify-between w-full absolute px-4 -translate-x-full transition-transform duration-300 group-hover:translate-x-0">
+          <div className="flex items-center justify-between w-full absolute px-4 translate-y-[130%] transition-transform duration-300 group-hover:translate-y-0 mt-2 group-hover:mt-0">
             <span>{children}</span>
             <span className="text-sm">→</span>
           </div>
@@ -371,28 +381,14 @@ export const AnnualSwitch = ({
   );
 };
 
-const badgeVariants = cva(
-  `bg-primary absolute text-sm font-semibold flex items-center justify-center text-primary-foreground`,
-  {
-    variants: {
-      position: {
-        top: "-top-8 left-0 w-full h-8",
-        inside:
-          "top-0.5 right-0.5 w-fit h-6 z-50 rounded-none px-2 font-medium",
-      },
-    },
-    defaultVariants: {
-      position: "top",
-    },
-  }
-);
-
-export const RecommendedBadge = ({
-  recommended,
-  position = "top",
-}: {
-  recommended: string;
-  position: "top" | "inside";
-}) => {
-  return <div className={cn(badgeVariants({ position }))}>{recommended}</div>;
+export const RecommendedBadge = ({ recommended }: { recommended: string }) => {
+  return (
+    <div
+      className={cn(
+        "bg-primary absolute text-sm font-semibold flex items-center justify-center text-primary-foreground lg:-top-8 lg:left-0 lg:w-full lg:h-8 top-0 right-0 w-fit h-6 z-50 rounded-none px-2"
+      )}
+    >
+      {recommended}
+    </div>
+  );
 };

@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 // import { OpenInV0Button } from "@/components/open-in-v0-button";
-import { Pricing } from "@/registry/autumn/pricing";
+import { AnnualSwitch, Pricing } from "@/registry/autumn/pricing";
 import { products } from "@/registry/autumn/pricecn.config";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CommandBar } from "@/components/command-bar";
@@ -9,6 +9,7 @@ import { Geist_Mono, Geist } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
+import { PricingCard, PricingTable } from "@/registry/autumn/pricing-card";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
@@ -50,7 +51,7 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="pt-[100px] h-full w-full flex flex-col items-center">
+        <div className="h-full w-full flex flex-col items-center">
           <Tabs
             className="w-full p-10 max-w-7xl flex flex-col gap-6"
             value={variant}
@@ -69,11 +70,16 @@ export default function Home() {
                 <TabsTrigger value="dev">Dev</TabsTrigger>
               </TabsList>
             </div>
-            <Pricing
+            {/* <Pricing
               showFeatures={true}
               products={products}
               variant={variant as "basic" | "dev"}
-            />
+            /> */}
+            <PricingTable variant={variant as "basic" | "dev"}>
+              <PricingCard productId="hobby" />
+              <PricingCard productId="organization" />
+              <PricingCard productId="enterprise" />
+            </PricingTable>
           </Tabs>
         </div>
         <div className="w-full py-6 flex justify-center items-center gap-1.5 text-sm text-muted-foreground">

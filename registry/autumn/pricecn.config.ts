@@ -1,8 +1,14 @@
 export interface Product {
+  id: string;
   name: string;
   description?: string;
 
   price: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+
+  priceAnnual?: {
     primaryText: string;
     secondaryText?: string;
   };
@@ -22,6 +28,7 @@ export interface Product {
 
 export const products: Product[] = [
   {
+    id: "hobby",
     name: "Hobby",
     description: "For personal projects and small-scale applications.",
     price: { primaryText: "Free", secondaryText: "up to 3 users" },
@@ -48,11 +55,16 @@ export const products: Product[] = [
     ],
   },
   {
+    id: "professional",
     name: "Professional",
     description: "For teams building production applications.",
     price: {
       primaryText: "$19",
       secondaryText: "per user/month plus compute costs*",
+    },
+    priceAnnual: {
+      primaryText: "$190",
+      secondaryText: "per user/year plus compute costs*",
     },
     buttonText: "Select plan",
     everythingFrom: "Hobby",
@@ -79,6 +91,7 @@ export const products: Product[] = [
     ],
   },
   {
+    id: "organization",
     name: "Organization",
     description: "For teams with higher traffic demands and compliance needs.",
     price: {
@@ -109,6 +122,7 @@ export const products: Product[] = [
     ],
   },
   {
+    id: "enterprise",
     name: "Enterprise",
     description: "For mission critical applications with complex needs.",
     price: { primaryText: "Custom" },

@@ -153,7 +153,10 @@ export default function Home() {
           </Tabs>
         </div>
         <div className="w-full py-6 flex justify-center items-center gap-1.5 text-sm text-muted-foreground">
-          Made with ❤️ by Autumn
+          Made with ❤️ by{" "}
+          <a href="https://useautumn.com" target="_blank" className="underline">
+            Autumn
+          </a>
         </div>
       </div>
     </div>

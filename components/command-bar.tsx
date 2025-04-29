@@ -30,7 +30,7 @@ export function CommandBar() {
         onClick={copyToClipboard}
         className="relative flex items-center gap-2 px-4 pr-12 py-3 rounded-md font-mono text-sm
           w-fit
-          bg-white dark:bg-zinc-700
+          bg-white dark:bg-zinc-900
           shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] 
           dark:shadow-[inset_0_1px_4px_rgba(0,0,0,0.6)]
           transition-all duration-300 ease-out
@@ -51,7 +51,7 @@ export function CommandBar() {
           );
         }}
       >
-        <span className="text-gray-700 dark:text-gray-200 font-semibold relative z-10">
+        <span className="text-gray-700 dark:text-gray-200 font-semibold relative z-10 text-left">
           {command}
         </span>
 

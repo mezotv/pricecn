@@ -13,14 +13,14 @@ import { Check, Loader2 } from "lucide-react";
 interface PricingTableContextType {
   isAnnual: boolean;
   setIsAnnual: (isAnnual: boolean) => void;
-  variant: "basic" | "dev";
+  variant: "classic" | "clean";
   products: typeof defaultProducts;
 }
 
 const PricingTableContext = createContext<PricingTableContextType>({
   isAnnual: false,
   setIsAnnual: () => {},
-  variant: "basic",
+  variant: "classic",
   products: defaultProducts,
 });
 
@@ -29,10 +29,9 @@ const pricingTableVariant = cva(
   {
     variants: {
       variant: {
-        basic:
-          "bg-background rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner",
-
-        dev: "gap-[2px]",
+        classic:
+          "bg-white rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner bg-gradient-to-br from-stone-100 to-background dark:from-background/95 dark:to-background",
+        clean: "gap-4",
       },
     },
   }
@@ -51,12 +50,12 @@ export const usePricingTableContext = (componentName: string) => {
 export const PricingTable = ({
   children,
   className,
-  variant = "basic",
+  variant = "classic",
   products = defaultProducts,
 }: {
   children: React.ReactNode;
   className?: string;
-  variant?: "basic" | "dev";
+  variant?: "classic" | "clean";
   products?: typeof defaultProducts;
 }) => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -91,43 +90,29 @@ interface PricingCardProps {
   onButtonClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-// Pricing Card
+const pricingCardVariants = cva("w-full h-full py-6 text-foreground", {
+  variants: {
+    variant: {
+      classic:
+        "border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px]",
+      clean: "border rounded-md bg-background",
+    },
+    recommended: {
+      classic:
+        "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900",
+      clean: "border bg-secondary shadow-xl border-primary/30",
+    },
+  },
+});
+
 export const PricingCard = ({
-  productId,
-  showFeatures = true,
-  className,
-  onButtonClick,
-}: PricingCardProps) => {
-  const { variant } = usePricingTableContext("PricingCard");
-
-  if (variant === "basic") {
-    return (
-      <PricingCardBasic
-        productId={productId}
-        showFeatures={showFeatures}
-        className={className}
-        onButtonClick={onButtonClick}
-      />
-    );
-  } else if (variant === "dev") {
-    return (
-      <PricingCardDev
-        productId={productId}
-        showFeatures={showFeatures}
-        className={className}
-        onButtonClick={onButtonClick}
-      />
-    );
-  }
-};
-
-export const PricingCardBasic = ({
   productId,
   showFeatures,
   className,
   onButtonClick,
 }: PricingCardProps) => {
-  const { isAnnual, products } = usePricingTableContext("PricingCardBasic");
+  const { isAnnual, products, variant } =
+    usePricingTableContext("PricingCardclassic");
   const product = products.find((p) => p.id === productId);
   if (!product) {
     throw new Error(`Product with id ${productId} not found`);
@@ -146,22 +131,17 @@ export const PricingCardBasic = ({
   return (
     <div
       className={cn(
-        "w-full h-full border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px] py-6 text-foreground",
-        recommendText &&
-          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900",
+        pricingCardVariants({
+          variant,
+          recommended: recommendText ? variant : null,
+        }),
         className
       )}
     >
-      {/* <div
-        className={cn(
-          "h-full flex flex-col text-foreground py-6",
-          recommendText && ""
-        )}
-      > */}
       <div
         className={cn(
           "flex flex-col h-full flex-grow",
-          recommendText && "lg:translate-y-6"
+          variant === "classic" && recommendText && "lg:translate-y-6"
         )}
       >
         <div className="h-full">
@@ -173,7 +153,7 @@ export const PricingCardBasic = ({
               </span>
             )}
             <div className="mt-2">
-              <h3 className="font-semibold text-md h-16 flex items-center px-6">
+              <h3 className="font-semibold text-md h-16 border-y flex items-center px-6">
                 <div>
                   {isAnnual && priceAnnual
                     ? priceAnnual?.primaryText
@@ -196,75 +176,19 @@ export const PricingCardBasic = ({
           )}
         </div>
         <div
-          className={cn("mt-4 px-6 ", recommendText && "lg:-translate-y-12")}
+          className={cn(
+            "mt-4 px-6 ",
+            variant === "classic" && recommendText && "lg:-translate-y-12"
+          )}
         >
           <PricingCardButton
             recommended={recommendText ? true : false}
-            priceVariant="basic"
+            priceVariant="classic"
             onClick={onButtonClick}
           >
             {buttonText}
           </PricingCardButton>
         </div>
-      </div>
-      {/* </div> */}
-    </div>
-  );
-};
-
-export const PricingCardDev = ({
-  productId,
-  showFeatures,
-  className,
-  onButtonClick,
-}: PricingCardProps) => {
-  const { products } = usePricingTableContext("PricingCardDev");
-  const product = products.find((p) => p.id === productId);
-  if (!product) {
-    throw new Error(`Product with id ${productId} not found`);
-  }
-
-  const { name, price, recommendText, buttonText, items, description } =
-    product;
-
-  return (
-    <div
-      className={cn(
-        className,
-        "w-full h-full outline outline-background relative flex flex-col rounded-none z-0 text-foreground"
-      )}
-    >
-      {recommendText && <RecommendedBadge recommended={recommendText} />}
-
-      <div className="bg-background h-full">
-        <div className={`flex flex-col gap-2 bg-primary/30 saturate-150 p-6`}>
-          <h2 className={`text-xl font-mono`}>{name}</h2>
-          <p className="text-sm h-12">{description}</p>
-        </div>
-        <div className="h-28 p-6 overflow-hidden">
-          <h3 className={`text-3xl truncate font-mono`}>{price.primaryText}</h3>
-          {price.secondaryText && (
-            <p className="text-sm text-muted-foreground mt-1">
-              {price.secondaryText}
-            </p>
-          )}
-        </div>
-
-        <div className="p-2">
-          <PricingCardButton
-            recommended={recommendText ? true : false}
-            priceVariant="dev"
-            onClick={onButtonClick}
-          >
-            {buttonText}
-          </PricingCardButton>
-        </div>
-
-        {showFeatures && (
-          <div className="px-6">
-            <PricingFeatureList items={items} showIcon={false} />
-          </div>
-        )}
       </div>
     </div>
   );
@@ -314,7 +238,7 @@ export const PricingFeatureList = ({
 // Pricing Card Button
 export interface PricingCardButtonProps extends React.ComponentProps<"button"> {
   recommended?: boolean;
-  priceVariant?: "basic" | "dev";
+  priceVariant?: "classic";
 }
 
 export const PricingCardButton = React.forwardRef<
@@ -326,9 +250,7 @@ export const PricingCardButton = React.forwardRef<
     <Button
       className={cn(
         "w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90",
-        priceVariant === "basic" &&
-          "outline outline-1 outline-border rounded-lg",
-        priceVariant === "dev" && "font-mono"
+        priceVariant === "classic" && "border rounded-lg"
       )}
       variant={recommended ? "default" : "secondary"}
       {...props}

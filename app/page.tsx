@@ -93,12 +93,25 @@ export default function Home() {
                 <CommandBar variant={variant} />
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="outline">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    window.open("https://docs.pricecn.com", "_blank");
+                  }}
+                >
                   <Link href="https://docs.pricecn.com" target="_blank">
                     Docs
                   </Link>
                 </Button>
-                <Button variant="outline">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    window.open(
+                      "https://github.com/useautumn/pricecn",
+                      "_blank"
+                    );
+                  }}
+                >
                   <Link
                     href="https://github.com/useautumn/pricecn"
                     target="_blank"

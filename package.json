@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "npm run registry:build && next dev --turbopack",
+    "build": "next build && npm run registry:build",
     "start": "next start",
-    "lint": "next lint",
-    "registry:build": "shadcn build"
+    "lint": "next lint", 
+    "registry:build": "shadcn build --output public"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.1",

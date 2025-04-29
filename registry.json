@@ -1,10 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "acme",
-  "homepage": "https://acme.com",
+  "name": "pricecn",
+  "homepage": "https://pricecn.com",
   "items": [
     {
-      "name": "pricing-table-classic",
+      "name": "classic/pricing-table",
       "type": "registry:component",
       "title": "Pricing Table",
       "description": "A pricing table component",
@@ -16,7 +16,53 @@
       "files": [
         {
           "path": "registry/classic/pricing-table.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/pricing-table.tsx"
+        },
+        {
+          "path": "registry/classic/example.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/example.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dev/pricing-table",
+      "type": "registry:component",
+      "title": "Pricing Table",
+      "description": "A pricing table component",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "button",
+        "switch"
+      ],
+      "files": [
+        {
+          "path": "registry/dev/pricing-table.tsx",
           "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "clean/pricing-table",
+      "type": "registry:component",
+      "title": "Pricing Table",
+      "description": "A pricing table component",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "button",
+        "switch"
+      ],
+      "files": [
+        {
+          "path": "registry/clean/pricing-table.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/pricing-table.tsx"
+        },
+        {
+          "path": "registry/clean/example.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/example.tsx"
         }
       ]
     }

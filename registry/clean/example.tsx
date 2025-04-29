@@ -1,30 +1,6 @@
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-
-  price: {
-    primaryText: string;
-    secondaryText?: string;
-  };
-
-  priceAnnual?: {
-    primaryText: string;
-    secondaryText?: string;
-  };
-
-  everythingFrom?: string;
-  buttonText?: string;
-  recommendText?: string;
-
-  items: {
-    primaryText: string;
-    secondaryText?: string;
-  }[];
-
-  // Pricing card actions
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}
+"use client";
+import { Button } from "@/components/ui/button";
+import { PricingCard, PricingTable, Product } from "./pricing-table";
 
 export const products: Product[] = [
   {
@@ -58,6 +34,7 @@ export const products: Product[] = [
     id: "professional",
     name: "Professional",
     description: "For teams building production applications.",
+    recommendedText: "Best Value",
     price: {
       primaryText: "$19",
       secondaryText: "per user/month plus compute costs*",
@@ -91,37 +68,6 @@ export const products: Product[] = [
     ],
   },
   {
-    id: "organization",
-    name: "Organization",
-    description: "For teams with higher traffic demands and compliance needs.",
-    price: {
-      primaryText: "$29",
-      secondaryText: "per user/month plus compute costs*",
-    },
-
-    recommendText: "Best Value",
-    buttonText: "Select plan",
-    everythingFrom: "Professional",
-    items: [
-      {
-        primaryText: "1 TB of bandwidth included",
-        secondaryText: "Then $0.10/GB",
-      },
-      {
-        primaryText: "Unlimited team members",
-      },
-      {
-        primaryText: "Audit logs",
-      },
-      {
-        primaryText: "SOC 2 Type II certificate",
-      },
-      {
-        primaryText: "ISO 27001 certificate",
-      },
-    ],
-  },
-  {
     id: "enterprise",
     name: "Enterprise",
     description: "For mission critical applications with complex needs.",
@@ -150,3 +96,22 @@ export const products: Product[] = [
     ],
   },
 ];
+
+export const PricingTableExample = () => {
+  return (
+    <div>
+      <Button
+        onClick={() => document.documentElement.classList.toggle("dark")}
+        className="p-2 mb-4 rounded-lg text-zinc-600 dark:text-zinc-300 
+        bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+      >
+        Toggle theme
+      </Button>
+      <PricingTable products={products} showFeatures={true}>
+        <PricingCard productId="hobby" />
+        <PricingCard productId="professional" />
+        <PricingCard productId="enterprise" />
+      </PricingTable>
+    </div>
+  );
+};

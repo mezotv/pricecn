@@ -14,7 +14,7 @@ Currently, we offer the `<PricingTable />` component, with more components comin
 To add the Pricing Table component to your project, run:
 
 ```bash
-npx shadcn@latest add https://pricecn.com/classic/pricing-table
+npx shadcn@latest add https://pricecn.com/classic/pricing-table.json
 ```
 
 This will install the component in the `components/pricing` folder. You can also replace `/classic` with `/clean` or `/dev` for different themes.

@@ -84,8 +84,9 @@ export default function Home() {
                   Beautiful, customizable, pricing components
                 </h1>
                 <p className="text-muted-foreground text-sm">
-                  A collection of React components that automatically generate
-                  based on a JSON config. Open source and free to use.
+                  A collection of open-source shadcn components that
+                  automatically generate based on a JSON config. Open source and
+                  free to use.
                 </p>
               </div>
               <div className="flex justify-between items-center">

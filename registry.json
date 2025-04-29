@@ -4,62 +4,19 @@
   "homepage": "https://acme.com",
   "items": [
     {
-      "name": "hello-world",
+      "name": "pricing-table-classic",
       "type": "registry:component",
-      "title": "Hello World",
-      "description": "A simple hello world component",
+      "title": "Pricing Table",
+      "description": "A pricing table component",
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "button",
-        "http://localhost:3000/r/example-form.json"
+        "switch"
       ],
       "files": [
         {
-          "path": "registry/new-york/hello-world/hello-world.tsx",
+          "path": "registry/classic/pricing-table.tsx",
           "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "example-form",
-      "type": "registry:component",
-      "title": "Example Form",
-      "description": "A contact form with Zod validation.",
-      "dependencies": ["zod"],
-      "registryDependencies": ["button", "input", "label", "textarea", "card"],
-      "files": [
-        {
-          "path": "registry/new-york/example-form/example-form.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "complex-component",
-      "type": "registry:component",
-      "title": "Complex Component",
-      "description": "A complex component showing hooks, libs and components.",
-      "registryDependencies": ["card"],
-      "files": [
-        {
-          "path": "registry/new-york/complex-component/page.tsx",
-          "type": "registry:page",
-          "target": "app/pokemon/page.tsx"
-        },
-        {
-          "path": "registry/new-york/complex-component/components/pokemon-card.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/new-york/complex-component/components/pokemon-image.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/new-york/complex-component/lib/pokemon.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "registry/new-york/complex-component/hooks/use-pokemon.ts",
-          "type": "registry:hook"
         }
       ]
     }

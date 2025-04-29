@@ -108,6 +108,7 @@ export const PricingCard = ({
     items,
     description,
     priceAnnual,
+    buttonUrl,
   } = product;
 
   return (
@@ -143,8 +144,8 @@ export const PricingCard = ({
         <div className="p-2">
           <PricingCardButton
             recommended={recommendText ? true : false}
-            priceVariant="dev"
             onClick={onButtonClick}
+            buttonUrl={buttonUrl}
           >
             {buttonText}
           </PricingCardButton>
@@ -204,28 +205,33 @@ export const PricingFeatureList = ({
 // Pricing Card Button
 export interface PricingCardButtonProps extends React.ComponentProps<"button"> {
   recommended?: boolean;
-  priceVariant?: "dev";
+  buttonUrl?: string;
 }
 
 export const PricingCardButton = React.forwardRef<
   HTMLButtonElement,
   PricingCardButtonProps
->(({ recommended, children, priceVariant, ...props }, ref) => {
+>(({ recommended, children, buttonUrl, onClick, ...props }, ref) => {
   const [loading, setLoading] = useState(false);
+
   return (
     <Button
-      className={cn(
-        "w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90",
-        priceVariant === "dev" && "font-mono"
-      )}
+      className="w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90"
       variant={recommended ? "default" : "secondary"}
       {...props}
       ref={ref}
       disabled={loading}
       onClick={async (e) => {
-        setLoading(true);
-        await props.onClick?.(e);
-        setLoading(false);
+        if (onClick) {
+          setLoading(true);
+          await onClick(e);
+          setLoading(false);
+        }
+
+        if (buttonUrl) {
+          window.open(buttonUrl, "_blank");
+          return;
+        }
       }}
     >
       {loading ? (

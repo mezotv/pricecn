@@ -73,6 +73,10 @@ export const PricingTable = ({
     throw new Error("products is required in <PricingTable />");
   }
 
+  if (products.length === 0) {
+    return <></>;
+  }
+
   return (
     <PricingTableContext.Provider
       value={{ isAnnual, setIsAnnual, products, showFeatures }}
@@ -257,14 +261,21 @@ export const PricingCardButton = React.forwardRef<
       ref={ref}
       disabled={loading}
       onClick={async (e) => {
-        if (buttonUrl) {
-          window.open(buttonUrl, "_blank");
-          return;
-        }
+        setLoading(true);
+        try {
+          if (onClick) {
+            await onClick(e);
 
-        if (onClick) {
-          setLoading(true);
-          await onClick(e);
+            return;
+          }
+
+          if (buttonUrl) {
+            window.open(buttonUrl, "_blank");
+            return;
+          }
+        } catch (error) {
+          throw error;
+        } finally {
           setLoading(false);
         }
       }}

@@ -182,42 +182,26 @@ export default function Home() {
 
             <TabsContent value="classic">
               <PricingTableClassic
-                variant={variant as "classic"}
                 className=""
                 products={currentProducts}
+                showFeatures={true}
               >
                 {currentProducts.map((product) => (
-                  <PricingCardClassic
-                    key={product.id}
-                    productId={product.id}
-                    showFeatures={true}
-                  />
+                  <PricingCardClassic key={product.id} productId={product.id} />
                 ))}
               </PricingTableClassic>
             </TabsContent>
             <TabsContent value="clean">
               <PricingTableClean className="" products={currentProducts}>
                 {currentProducts.map((product) => (
-                  <PricingCardClean
-                    key={product.id}
-                    productId={product.id}
-                    showFeatures={true}
-                  />
+                  <PricingCardClean key={product.id} productId={product.id} />
                 ))}
               </PricingTableClean>
             </TabsContent>
             <TabsContent value="dev">
-              <PricingTableDev
-                variant={variant as "dev"}
-                className=""
-                products={currentProducts}
-              >
+              <PricingTableDev className="" products={currentProducts}>
                 {currentProducts.map((product) => (
-                  <PricingCardDev
-                    key={product.id}
-                    productId={product.id}
-                    showFeatures={true}
-                  />
+                  <PricingCardDev key={product.id} productId={product.id} />
                 ))}
               </PricingTableDev>
             </TabsContent>

@@ -15,7 +15,7 @@ export interface Product {
 
   everythingFrom?: string;
   buttonText?: string;
-  recommendText?: string;
+  recommendedText?: string;
 
   items: {
     primaryText: string;
@@ -90,6 +90,7 @@ export const products: Product[] = [
       },
     ],
   },
+
   {
     id: "organization",
     name: "Organization",
@@ -98,8 +99,12 @@ export const products: Product[] = [
       primaryText: "$29",
       secondaryText: "per user/month plus compute costs*",
     },
+    priceAnnual: {
+      primaryText: "$290",
+      secondaryText: "per user/year plus compute costs*",
+    },
 
-    recommendText: "Best Value",
+    recommendedText: "Best Value",
     buttonText: "Select plan",
     everythingFrom: "Professional",
     items: [
@@ -121,11 +126,15 @@ export const products: Product[] = [
       },
     ],
   },
+
   {
     id: "enterprise",
     name: "Enterprise",
     description: "For mission critical applications with complex needs.",
-    price: { primaryText: "Custom" },
+    price: {
+      primaryText: "Custom",
+      secondaryText: "pricing for your enterprise",
+    },
     buttonText: "Get in touch",
     everythingFrom: "Organization",
     items: [

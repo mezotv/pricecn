@@ -58,6 +58,7 @@ export const products: Product[] = [
     id: "professional",
     name: "Professional",
     description: "For teams building production applications.",
+    recommendText: "Best Value",
     price: {
       primaryText: "$19",
       secondaryText: "per user/month plus compute costs*",

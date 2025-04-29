@@ -16,7 +16,7 @@ export interface Product {
   buttonText?: string;
   buttonUrl?: string;
 
-  recommendText?: string;
+  recommendedText?: string;
 
   price: {
     primaryText: string;
@@ -73,19 +73,24 @@ export const PricingTable = ({
     throw new Error("products is required in <PricingTable />");
   }
 
+  const hasEvenProducts = products.length % 2 === 0;
+
   return (
     <PricingTableContext.Provider
       value={{ isAnnual, setIsAnnual, products, showFeatures }}
     >
       <div className={cn("flex items-center flex-col")}>
         {products.some((p) => p.priceAnnual) && (
-          <div className={cn(products.some((p) => p.recommendText) && "mb-8")}>
+          <div
+            className={cn(products.some((p) => p.recommendedText) && "mb-8")}
+          >
             <AnnualSwitch isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
           </div>
         )}
         <div
           className={cn(
-            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col bg-white rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner bg-gradient-to-br from-stone-100 to-background dark:from-background/95 dark:to-background",
+            "w-full grid grid-cols-1 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col bg-white rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner bg-gradient-to-br from-background to-stone-50 dark:from-background/95 dark:to-background",
+            hasEvenProducts && "sm:grid-cols-2",
             className
           )}
         >
@@ -123,24 +128,26 @@ export const PricingCard = ({
     name,
     price,
     priceAnnual,
-    recommendText,
+    recommendedText,
     buttonText,
     items,
     description,
     buttonUrl,
+    everythingFrom,
   } = product;
 
-  const isRecommended = recommendText ? true : false;
+  const isRecommended = recommendedText ? true : false;
 
   return (
     <div
       className={cn(
         "w-full h-full py-6 text-foreground border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px]",
         isRecommended &&
-          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900",
+          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900 relative",
         className
       )}
     >
+      {recommendedText && <RecommendedBadge recommended={recommendedText} />}
       <div
         className={cn(
           "flex flex-col h-full flex-grow",
@@ -151,11 +158,11 @@ export const PricingCard = ({
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl font-bold px-6 ">{name}</h2>
             {description && (
-              <span className="text-sm text-muted-foreground px-6 h-12">
+              <span className="text-sm text-muted-foreground px-6 h-8">
                 {description}
               </span>
             )}
-            <div className="mt-2">
+            <div className="mt-2 mb-6">
               <h3 className="font-semibold text-md h-16 border-y flex items-center px-6">
                 <div>
                   {isAnnual && priceAnnual
@@ -172,17 +179,19 @@ export const PricingCard = ({
               </h3>
             </div>
           </div>
-          {showFeatures && (
-            <div className="flex-grow px-6">
-              <PricingFeatureList items={items} showIcon={true} />
+          {showFeatures && items.length > 0 && (
+            <div className="flex-grow px-6 mb-6">
+              <PricingFeatureList
+                items={items}
+                showIcon={true}
+                everythingFrom={everythingFrom}
+              />
             </div>
           )}
         </div>
-        <div
-          className={cn("mt-4 px-6 ", isRecommended && "lg:-translate-y-12")}
-        >
+        <div className={cn(" px-6 ", isRecommended && "lg:-translate-y-12")}>
           <PricingCardButton
-            recommended={recommendText ? true : false}
+            recommended={recommendedText ? true : false}
             onClick={onButtonClick}
             buttonUrl={buttonUrl}
             {...buttonProps}
@@ -211,7 +220,7 @@ export const PricingFeatureList = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("py-6 flex-grow", className)}>
+    <div className={cn("flex-grow", className)}>
       {everythingFrom && (
         <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
       )}
@@ -312,7 +321,7 @@ export const AnnualSwitch = ({
 
 export const RecommendedBadge = ({ recommended }: { recommended: string }) => {
   return (
-    <div className="bg-primary absolute text-sm font-semibold flex items-center justify-center text-primary-foreground lg:-top-8 lg:left-0 lg:w-full lg:h-8 top-0 right-0 w-fit h-6 z-50 rounded-none px-2">
+    <div className="bg-secondary absolute border text-muted-foreground text-sm font-medium lg:rounded-full px-3 lg:py-0.5 lg:top-4 lg:right-4 top-[-1px] right-[-1px] rounded-bl-lg">
       {recommended}
     </div>
   );

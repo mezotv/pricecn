@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { PricingCard, PricingTable, Product } from "./pricing-table";
 
 const products: Product[] = [
@@ -61,12 +62,12 @@ const products: Product[] = [
 export const PricingTableExample = () => {
   return (
     <div>
-      <button
+      <Button
         onClick={() => document.documentElement.classList.toggle("dark")}
         className="p-2 mb-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
       >
         Toggle theme
-      </button>
+      </Button>
       <PricingTable products={products} showFeatures={true}>
         <PricingCard productId="hobby" />
         <PricingCard productId="pro" />

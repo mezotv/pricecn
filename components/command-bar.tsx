@@ -17,7 +17,7 @@ export function CommandBar() {
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full">
       {/* Gradient border container */}
       <div
         className="absolute -inset-[1.8px] rounded-md opacity-100 transition-opacity duration-300
@@ -29,7 +29,7 @@ export function CommandBar() {
       <button
         onClick={copyToClipboard}
         className="relative flex items-center gap-2 px-4 pr-12 py-3 rounded-md font-mono text-sm
-          w-fit
+          w-full
           bg-white dark:bg-zinc-900
           shadow-[inset_0_1px_4px_rgba(0,0,0,0.15)] 
           dark:shadow-[inset_0_1px_4px_rgba(0,0,0,0.6)]
@@ -51,12 +51,12 @@ export function CommandBar() {
           );
         }}
       >
-        <span className="text-gray-700 dark:text-gray-200 font-semibold relative z-10 text-left">
+        <span className="text-gray-700 dark:text-gray-200 font-medium relative z-10 text-left text-xs w-full overflow-hidden break-words">
           {command}
         </span>
 
         <div
-          className={`absolute right-5 flex items-center justify-center transition-opacity duration-200 ${
+          className={`absolute right-5 items-center justify-center transition-opacity duration-200 flex ${
             copied ? "opacity-0" : "opacity-100"
           }`}
         >

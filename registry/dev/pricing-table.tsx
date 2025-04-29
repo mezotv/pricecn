@@ -1,39 +1,50 @@
 "use client";
 
+import React from "react";
 import { createContext, useContext, useState } from "react";
 import { cn } from "@/lib/utils";
-
-import { products as defaultProducts } from "./pricecn.config";
-import { cva } from "class-variance-authority";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { Check, Loader2 } from "lucide-react";
 
-interface PricingTableContextType {
-  isAnnual: boolean;
-  setIsAnnual: (isAnnual: boolean) => void;
-  variant: "dev";
-  products: typeof defaultProducts;
+export interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  everythingFrom?: string;
+
+  buttonText?: string;
+  buttonUrl?: string;
+
+  recommendedText?: string;
+
+  price: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+
+  priceAnnual?: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+
+  items: {
+    primaryText: string;
+    secondaryText?: string;
+  }[];
 }
 
-const PricingTableContext = createContext<PricingTableContextType>({
+const PricingTableContext = createContext<{
+  isAnnual: boolean;
+  setIsAnnual: (isAnnual: boolean) => void;
+  products: Product[];
+  showFeatures: boolean;
+}>({
   isAnnual: false,
   setIsAnnual: () => {},
-  variant: "dev",
-  products: defaultProducts,
+  products: [],
+  showFeatures: true,
 });
-
-const pricingTableVariant = cva(
-  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col",
-  {
-    variants: {
-      variant: {
-        dev: "gap-[2px]",
-      },
-    },
-  }
-);
 
 export const usePricingTableContext = (componentName: string) => {
   const context = useContext(PricingTableContext);
@@ -47,33 +58,39 @@ export const usePricingTableContext = (componentName: string) => {
 
 export const PricingTable = ({
   children,
+  products,
+  showFeatures = true,
   className,
-  variant = "dev",
-  products = defaultProducts,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  products?: Product[];
+  showFeatures?: boolean;
   className?: string;
-  variant?: "dev";
-  products?: typeof defaultProducts;
 }) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
+  if (!products) {
+    throw new Error("products is required in <PricingTable />");
+  }
+
   return (
     <PricingTableContext.Provider
-      value={{
-        isAnnual,
-        setIsAnnual,
-        variant,
-        products: products || defaultProducts || [],
-      }}
+      value={{ isAnnual, setIsAnnual, products, showFeatures }}
     >
       <div className={cn("flex items-center flex-col")}>
         {products.some((p) => p.priceAnnual) && (
-          <div className={cn(products.some((p) => p.recommendText) && "mb-8")}>
+          <div
+            className={cn(products.some((p) => p.recommendedText) && "mb-8")}
+          >
             <AnnualSwitch isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
           </div>
         )}
-        <div className={cn(pricingTableVariant({ variant }), className)}>
+        <div
+          className={cn(
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col gap-[2px] w-full",
+            className
+          )}
+        >
           {children}
         </div>
       </div>
@@ -83,19 +100,21 @@ export const PricingTable = ({
 
 interface PricingCardProps {
   productId: string;
-  showFeatures?: boolean;
   className?: string;
   onButtonClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  buttonProps?: React.ComponentProps<"button">;
 }
 
 export const PricingCard = ({
   productId,
-  showFeatures,
   className,
   onButtonClick,
+  buttonProps,
 }: PricingCardProps) => {
-  const { isAnnual, products } = usePricingTableContext("PricingCardDev");
+  const { isAnnual, products, showFeatures } =
+    usePricingTableContext("PricingCard");
   const product = products.find((p) => p.id === productId);
+
   if (!product) {
     throw new Error(`Product with id ${productId} not found`);
   }
@@ -103,37 +122,41 @@ export const PricingCard = ({
   const {
     name,
     price,
-    recommendText,
+    priceAnnual,
+    recommendedText,
     buttonText,
     items,
     description,
-    priceAnnual,
     buttonUrl,
+    everythingFrom,
   } = product;
+
+  const isRecommended = recommendedText ? true : false;
 
   return (
     <div
       className={cn(
-        className,
         "w-full h-full border border-background relative flex flex-col rounded-none z-0 text-foreground",
-        recommendText && "border-primary border-4 lg:border-t-[1px]"
+        isRecommended && "border-primary border-4 lg:border-t-[1px]",
+        className
       )}
     >
-      {recommendText && <RecommendedBadge recommended={recommendText} />}
+      {recommendedText && <RecommendedBadge recommended={recommendedText} />}
 
       <div className="bg-background h-full">
-        <div className={`flex flex-col gap-2 bg-primary/10 p-6`}>
-          <h2 className={`text-xl font-medium`}>{name}</h2>
-          <p className="text-sm h-12">{description}</p>
+        <div className={`flex flex-col gap-2 bg-secondary p-6 mb-6`}>
+          <h2 className={`text-lg`}>{name}</h2>
+          {description && <p className="text-sm h-12">{description}</p>}
         </div>
-        <div className="h-28 p-6 overflow-hidden">
-          <h3 className={`text-3xl truncate font-mono`}>
+
+        <div className="px-6 min-h-12 flex flex-col justify-cente mb-6">
+          <h3 className={`text-3xl flex items-center truncate mb-1 min-h-12`}>
             {isAnnual && priceAnnual
               ? priceAnnual?.primaryText
               : price.primaryText}
           </h3>
           {price.secondaryText && (
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground h-6">
               {isAnnual && priceAnnual
                 ? priceAnnual?.secondaryText
                 : price.secondaryText}
@@ -141,19 +164,24 @@ export const PricingCard = ({
           )}
         </div>
 
-        <div className="p-2">
+        <div className="px-3 mb-6">
           <PricingCardButton
-            recommended={recommendText ? true : false}
+            recommended={isRecommended}
             onClick={onButtonClick}
             buttonUrl={buttonUrl}
+            {...buttonProps}
           >
             {buttonText}
           </PricingCardButton>
         </div>
 
-        {showFeatures && (
+        {showFeatures && items.length > 0 && (
           <div className="px-6">
-            <PricingFeatureList items={items} showIcon={false} />
+            <PricingFeatureList
+              items={items}
+              showIcon={false}
+              everythingFrom={everythingFrom}
+            />
           </div>
         )}
       </div>
@@ -177,7 +205,7 @@ export const PricingFeatureList = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("py-6 flex-grow", className)}>
+    <div className={cn("pb-6 flex-grow", className)}>
       {everythingFrom && (
         <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
       )}
@@ -211,28 +239,29 @@ export interface PricingCardButtonProps extends React.ComponentProps<"button"> {
 export const PricingCardButton = React.forwardRef<
   HTMLButtonElement,
   PricingCardButtonProps
->(({ recommended, children, buttonUrl, onClick, ...props }, ref) => {
+>(({ recommended, children, buttonUrl, onClick, className, ...props }, ref) => {
   const [loading, setLoading] = useState(false);
-
   return (
     <Button
-      className="w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90"
+      className={cn(
+        "w-full py-3 px-4 rounded-none group overflow-hidden relative transition-all duration-300 hover:brightness-90 font-mono"
+      )}
       variant={recommended ? "default" : "secondary"}
-      {...props}
       ref={ref}
       disabled={loading}
       onClick={async (e) => {
+        if (buttonUrl) {
+          window.open(buttonUrl, "_blank");
+          return;
+        }
+
         if (onClick) {
           setLoading(true);
           await onClick(e);
           setLoading(false);
         }
-
-        if (buttonUrl) {
-          window.open(buttonUrl, "_blank");
-          return;
-        }
       }}
+      {...props}
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
@@ -252,7 +281,6 @@ export const PricingCardButton = React.forwardRef<
     </Button>
   );
 });
-PricingCardButton.displayName = "PricingCardButton";
 
 // Annual Switch
 export const AnnualSwitch = ({

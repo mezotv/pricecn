@@ -1,10 +1,10 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
-export function CommandBar() {
+export function CommandBar({ variant }: { variant: string }) {
   const [copied, setCopied] = useState(false);
-  const command =
-    "npx shadcn@latest add https://pricecn.com/pricing-table.json";
+  const command = `npx shadcn@latest add`;
+  const url = `https://pricecn.com/${variant}/pricing-table.json`;
 
   const copyToClipboard = async () => {
     try {
@@ -53,6 +53,8 @@ export function CommandBar() {
       >
         <span className="text-gray-700 dark:text-gray-200 font-medium relative z-10 text-left text-xs w-full overflow-hidden break-words">
           {command}
+          <br />
+          {url}
         </span>
 
         <div

@@ -89,14 +89,21 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex justify-between items-center">
-                <CommandBar />
+                <CommandBar variant={variant} />
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="outline">
-                  <Link href="/docs">Docs</Link>
+                  <Link href="https://docs.pricecn.com" target="_blank">
+                    Docs
+                  </Link>
                 </Button>
                 <Button variant="outline">
-                  <Link href="/docs">Github</Link>
+                  <Link
+                    href="https://github.com/useautumn/pricecn"
+                    target="_blank"
+                  >
+                    Github
+                  </Link>
                 </Button>
               </div>
             </div>

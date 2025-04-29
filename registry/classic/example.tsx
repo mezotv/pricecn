@@ -2,62 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { PricingCard, PricingTable, Product } from "./pricing-table";
 
-// export const products: Product[] = [
-//   {
-//     id: "hobby",
-//     name: "Hobby",
-//     description: "For personal projects and small-scale applications.",
-//     buttonText: "Get started",
-
-//     price: {
-//       primaryText: "Free",
-//     },
-//     items: [
-//       {
-//         primaryText: "Deploy full-stack apps in minutes",
-//       },
-//     ],
-//   },
-//   {
-//     id: "pro",
-//     name: "Pro",
-//     description: "For personal projects and small-scale applications.",
-//     buttonText: "Get started",
-//     buttonUrl: "https://www.google.com",
-
-//     price: {
-//       primaryText: "$30",
-//       secondaryText: "per month",
-//     },
-//     priceAnnual: {
-//       primaryText: "$120",
-//       secondaryText: "per year",
-//     },
-//     items: [
-//       {
-//         primaryText: "Deploy full-stack apps in minutes",
-//       },
-//     ],
-//     recommendedText: "Recommended",
-//   },
-//   {
-//     id: "enterprise",
-//     name: "Enterprise",
-//     description: "For personal projects and small-scale applications.",
-
-//     buttonText: "Contact us",
-//     buttonUrl: "https://www.google.com",
-//     price: {
-//       primaryText: "$100",
-//       secondaryText: "per month",
-//     },
-//     items: [
-//       {
-//         primaryText: "Deploy full-stack apps in minutes",
-//       },
-//     ],
-//   },
-// ];
 export const products: Product[] = [
   {
     id: "hobby",

@@ -1,10 +1,7 @@
 "use client";
 import * as React from "react";
-// import { OpenInV0Button } from "@/components/open-in-v0-button";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { CommandBar } from "@/components/command-bar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CommandBar } from "@/components/landing/command-bar";
 import { Geist_Mono, Geist } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -23,11 +20,7 @@ import {
 } from "@/registry/clean/pricing-table";
 import { products } from "@/registry/classic/example";
 
-import Editor from "react-simple-code-editor";
-import { highlight, languages } from "prismjs/components/prism-core";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import "prism-themes/themes/prism-vsc-dark-plus.css";
+import { CodeEditor } from "@/components/landing/code-editor";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
@@ -54,19 +47,27 @@ export default function Home() {
       setCurrentProducts(parsed);
       setError(false);
     } catch (e: any) {
-      console.warn("Invalid JSON");
+      console.warn("Invalid JSON", e);
       setError(true);
     }
   };
 
-  const hightlightWithLineNumbers = (input: string, language: string) =>
-    highlight(input, language)
-      .split("\n")
-      .map((line, i) => `<span class='editorLineNumber'>${i + 1}</span>${line}`)
-      .join("\n");
+  const PricingTable =
+    variant === "classic"
+      ? PricingTableClassic
+      : variant === "clean"
+      ? PricingTableClean
+      : PricingTableDev;
+
+  const PricingCard =
+    variant === "classic"
+      ? PricingCardClassic
+      : variant === "clean"
+      ? PricingCardClean
+      : PricingCardDev;
 
   return (
-    <div className="h-full w-screen flex flex-col justify-center items-center dark:bg-zinc-900">
+    <div className="h-full w-full flex flex-col justify-center items-center dark:bg-zinc-900">
       <div className="h-full w-full flex flex-col items-center gap-4">
         <div className="px-8 py-4 flex w-full justify-between items-center">
           <div className={`${geistMono.className} text-2xl font-bold`}>
@@ -99,53 +100,12 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col w-full relative rounded-md max-w-[700px]">
-              {error ? (
-                <div className="bg-red-600 translate-y-2 pb-2 rounded-t-lg text-white h-10 items-center justify-center flex top-0 right-0 w-full z-100 text-sm">
-                  Invalid JSON
-                </div>
-              ) : (
-                <div className="h-10 translate-y-2 flex items-center pb-3 text-sm bg-transparent text-muted-foreground z-0">
-                  Try me
-                  <span className="hidden sm:inline">
-                    &nbsp;with your own products
-                  </span>
-                  ! &nbsp;
-                  <span className="translate-y-1 ml-1">↴</span>
-                </div>
-              )}
-              <div className="overflow-scroll z-10 max-h-[450px] rounded-md border bg-zinc-900 shadow-lg shadow-black/60 border-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#18181b] [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-thumb]:rounded-md overflow-x-hidden">
-                <style>
-                  {`
-                    .editorLineNumber {
-                    position: absolute;
-                    left: 0px;
-                    color: #666;
-                    text-align: right;
-                    width: 25px;
-                    font-weight: 100;
-                    }
-                  
-                  `}
-                </style>
-                <Editor
-                  value={customConfig}
-                  onValueChange={handleConfigChange}
-                  highlight={(code) =>
-                    hightlightWithLineNumbers(code, languages.js)
-                  }
-                  padding={10}
-                  textareaClassName="focus:outline-none !pl-12"
-                  preClassName="!pl-12"
-                  style={{
-                    fontFamily: "monospace",
-                    fontSize: 11,
-                    caretColor: "white",
-                    color: "white",
-                  }}
-                />
-              </div>
-            </div>
+
+            <CodeEditor
+              customConfig={customConfig}
+              handleConfigChange={handleConfigChange}
+              error={error}
+            />
           </div>
           <Tabs
             className="w-full py-10 max-w-7xl flex flex-col gap-6"
@@ -173,32 +133,15 @@ export default function Home() {
                 </TabsList>
               </div>
             </div>
-
-            <TabsContent value="classic">
-              <PricingTableClassic
-                className=""
-                products={currentProducts}
-                showFeatures={true}
-              >
-                {currentProducts.map((product) => (
-                  <PricingCardClassic key={product.id} productId={product.id} />
-                ))}
-              </PricingTableClassic>
-            </TabsContent>
-            <TabsContent value="clean">
-              <PricingTableClean className="" products={currentProducts}>
-                {currentProducts.map((product) => (
-                  <PricingCardClean key={product.id} productId={product.id} />
-                ))}
-              </PricingTableClean>
-            </TabsContent>
-            <TabsContent value="dev">
-              <PricingTableDev className="" products={currentProducts}>
-                {currentProducts.map((product) => (
-                  <PricingCardDev key={product.id} productId={product.id} />
-                ))}
-              </PricingTableDev>
-            </TabsContent>
+            <PricingTable
+              className=""
+              products={currentProducts}
+              showFeatures={true}
+            >
+              {currentProducts.map((product) => (
+                <PricingCard key={product.id} productId={product.id} />
+              ))}
+            </PricingTable>
           </Tabs>
         </div>
         <div className="w-full py-6 flex justify-center items-center gap-1.5 text-sm text-muted-foreground">

@@ -1,23 +1,84 @@
-# registry-template
+# pricecn
 
-You can use the `shadcn` CLI to run your own component registry. Running your own
-component registry allows you to distribute your custom components, hooks, pages, and
-other files to any React project.
+This repo is a fork of [shadcn/registry-template](https://github.com/shadcn-ui/registry-template)
 
-> [!IMPORTANT]  
-> This template uses Tailwind v3. For Tailwind v4, see [registry-template](https://github.com/shadcn-ui/registry-template-v4).
+**pricecn** is a free and open source project for beautiful, customizable shadcn pricing components.
 
-## Getting Started
+Currently, we offer the `<PricingTable />` component, with more components coming soon, such as `<FeatureTable />`, `<ManageBilling />`, and more.
 
-This is a template for creating a custom registry using Next.js.
 
-- The template uses a `registry.json` file to define components and their files.
-- The `shadcn build` command is used to build the registry.
-- The registry items are served as static files under `public/r/[name].json`.
-- The template also includes a route handler for serving registry items.
-- Every registry item are compatible with the `shadcn` CLI.
-- We have also added v0 integration using the `Open in v0` api.
+## Usage
 
-## Documentation
+### 1. Install
 
-Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
+To add the Pricing Table component to your project, run:
+
+```bash
+npx shadcn@latest add https://pricecn.com/pricing-table
+```
+
+This will install the component in the `components/pricing` folder.
+
+---
+
+### 2. Example Usage
+
+An example usage of `<PricingTable />` will be downloaded as `components/pricing/example.tsx`. This file demonstrates how to define your products and pass them into the `PricingTable` component.
+
+```tsx
+import { PricingTable, PricingCard, Product } from "./pricing-table";
+
+export const products: Product[] = [
+  {
+    id: "hobby",
+    name: "Hobby",
+    description: "For personal projects and small-scale applications.",
+    price: { primaryText: "Free", secondaryText: "up to 3 users" },
+    buttonText: "Start deploying",
+    items: [
+      { primaryText: "Deploy full-stack apps in minutes" },
+      { primaryText: "Fully-managed datastores" },
+      // ...more features
+    ],
+  },
+  // ...more products
+];
+
+export const PricingTableExample = () => (
+  <PricingTable products={products} showFeatures={true}>
+    <PricingCard productId="hobby" />
+    <PricingCard productId="professional" />
+    <PricingCard productId="enterprise" />
+  </PricingTable>
+);
+```
+
+---
+
+### 3. Product Schema
+
+Here's the schema for a `Product`:
+
+```ts
+type Product = {
+  id: string;
+  name: string;
+  description?: string;
+  recommendedText?: string;
+  price: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+  priceAnnual?: {
+    primaryText: string;
+    secondaryText?: string;
+  };
+  buttonText: string;
+  everythingFrom?: string;
+  items: {
+    primaryText: string;
+    secondaryText?: string;
+  }[];
+};
+```
+

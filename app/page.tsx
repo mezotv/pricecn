@@ -17,6 +17,10 @@ import {
   PricingCard as PricingCardDev,
   PricingTable as PricingTableDev,
 } from "@/registry/dev/pricing-table";
+import {
+  PricingCard as PricingCardClean,
+  PricingTable as PricingTableClean,
+} from "@/registry/clean/pricing-table";
 import { products } from "@/registry/dev/pricecn.config";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs/components/prism-core";
@@ -159,19 +163,15 @@ export default function Home() {
               </PricingTableClassic>
             </TabsContent>
             <TabsContent value="clean">
-              <PricingTableClassic
-                variant={variant as "clean"}
-                className=""
-                products={currentProducts}
-              >
+              <PricingTableClean className="" products={currentProducts}>
                 {currentProducts.map((product) => (
-                  <PricingCardClassic
+                  <PricingCardClean
                     key={product.id}
                     productId={product.id}
                     showFeatures={true}
                   />
                 ))}
-              </PricingTableClassic>
+              </PricingTableClean>
             </TabsContent>
             <TabsContent value="dev">
               <PricingTableDev

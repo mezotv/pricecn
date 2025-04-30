@@ -84,9 +84,9 @@ export default function Home() {
                   Beautiful, customizable, pricing components
                 </h1>
                 <p className="text-muted-foreground text-sm">
-                  A collection of open-source shadcn components that
-                  automatically generate based on a JSON config. Open source and
-                  free to use.
+                  A collection of shadcn pricing components that can be
+                  automatically generated from a JSON schema. Fully
+                  customizable, open-source and free forever.
                 </p>
               </div>
               <div className="flex justify-between items-center">

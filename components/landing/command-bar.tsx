@@ -8,7 +8,7 @@ export function CommandBar({ variant }: { variant: string }) {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(command);
+      await navigator.clipboard.writeText(command + " " + url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {

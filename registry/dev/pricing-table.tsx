@@ -39,11 +39,13 @@ const PricingTableContext = createContext<{
   setIsAnnual: (isAnnual: boolean) => void;
   products: Product[];
   showFeatures: boolean;
+  uniform: boolean;
 }>({
   isAnnual: false,
   setIsAnnual: () => {},
   products: [],
   showFeatures: true,
+  uniform: false,
 });
 
 export const usePricingTableContext = (componentName: string) => {
@@ -61,11 +63,13 @@ export const PricingTable = ({
   products,
   showFeatures = true,
   className,
+  uniform = false,
 }: {
   children?: React.ReactNode;
   products?: Product[];
   showFeatures?: boolean;
   className?: string;
+  uniform?: boolean;
 }) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
@@ -75,12 +79,14 @@ export const PricingTable = ({
 
   return (
     <PricingTableContext.Provider
-      value={{ isAnnual, setIsAnnual, products, showFeatures }}
+      value={{ isAnnual, setIsAnnual, products, showFeatures, uniform }}
     >
       <div className={cn("flex items-center flex-col")}>
         {products.some((p) => p.priceAnnual) && (
           <div
-            className={cn(products.some((p) => p.recommendedText) && "mb-8")}
+            className={cn(
+              products.some((p) => p.recommendedText) && !uniform && "mb-8"
+            )}
           >
             <AnnualSwitch isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
           </div>
@@ -111,7 +117,7 @@ export const PricingCard = ({
   onButtonClick,
   buttonProps,
 }: PricingCardProps) => {
-  const { isAnnual, products, showFeatures } =
+  const { isAnnual, products, showFeatures, uniform } =
     usePricingTableContext("PricingCard");
   const product = products.find((p) => p.id === productId);
 
@@ -137,11 +143,15 @@ export const PricingCard = ({
     <div
       className={cn(
         "w-full h-full border border-background relative flex flex-col rounded-none z-0 text-foreground",
-        isRecommended && "border-primary border-4 lg:border-t-[1px]",
+        isRecommended &&
+          !uniform &&
+          "border-primary border-4 lg:border-t-[1px]",
         className
       )}
     >
-      {recommendedText && <RecommendedBadge recommended={recommendedText} />}
+      {recommendedText && !uniform && (
+        <RecommendedBadge recommended={recommendedText} />
+      )}
 
       <div className="bg-background h-full">
         <div className={`flex flex-col gap-2 bg-secondary p-6 mb-6`}>

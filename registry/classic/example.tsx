@@ -32,7 +32,7 @@ export const products: Product[] = [
   },
   {
     id: "professional",
-    name: "Professional",
+    name: "Pro",
     description: "For teams building production applications.",
     recommendedText: "Best Value",
     price: {
@@ -71,7 +71,7 @@ export const products: Product[] = [
     id: "enterprise",
     name: "Enterprise",
     description: "For mission critical applications with complex needs.",
-    price: { primaryText: "Custom" },
+    price: { primaryText: "Custom", secondaryText: "pricing for your team" },
     buttonText: "Get in touch",
     everythingFrom: "Organization",
     items: [

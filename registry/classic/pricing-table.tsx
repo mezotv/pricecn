@@ -39,11 +39,13 @@ const PricingTableContext = createContext<{
   setIsAnnual: (isAnnual: boolean) => void;
   products: Product[];
   showFeatures: boolean;
+  uniform: boolean;
 }>({
   isAnnual: false,
   setIsAnnual: () => {},
   products: [],
   showFeatures: true,
+  uniform: false,
 });
 
 export const usePricingTableContext = (componentName: string) => {
@@ -61,11 +63,13 @@ export const PricingTable = ({
   products,
   showFeatures = true,
   className,
+  uniform = false,
 }: {
   children?: React.ReactNode;
   products?: Product[];
   showFeatures?: boolean;
   className?: string;
+  uniform?: boolean;
 }) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
@@ -80,19 +84,21 @@ export const PricingTable = ({
 
   return (
     <PricingTableContext.Provider
-      value={{ isAnnual, setIsAnnual, products, showFeatures }}
+      value={{ isAnnual, setIsAnnual, products, showFeatures, uniform }}
     >
       <div className={cn("flex items-center flex-col")}>
         {products.some((p) => p.priceAnnual) && (
           <div
-            className={cn(products.some((p) => p.recommendedText) && "mb-8")}
+            className={cn(
+              products.some((p) => p.recommendedText) && !uniform && "mb-8"
+            )}
           >
             <AnnualSwitch isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
           </div>
         )}
         <div
           className={cn(
-            "w-full grid grid-cols-1 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col bg-white rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner bg-gradient-to-br from-background to-stone-50 dark:from-background/95 dark:to-background",
+            "w-full grid grid-cols-1 lg:grid-cols-none lg:auto-cols-[minmax(200px,1fr)] lg:grid-flow-col bg-background rounded-xl border overflow-hidden lg:overflow-visible dark:shadow-zinc-800 shadow-inner ",
             hasEvenProducts && "sm:grid-cols-2",
             className
           )}
@@ -118,7 +124,7 @@ export const PricingCard = ({
   onButtonClick,
   buttonProps,
 }: PricingCardProps) => {
-  const { isAnnual, products, showFeatures } =
+  const { isAnnual, products, showFeatures, uniform } =
     usePricingTableContext("PricingCard");
 
   const product = products.find((p) => p.id === productId);
@@ -146,28 +152,31 @@ export const PricingCard = ({
       className={cn(
         "w-full h-full py-6 text-foreground border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px]",
         isRecommended &&
-          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-xl lg:shadow-zinc-200 lg:dark:shadow-zinc-800 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900 relative",
+          !uniform &&
+          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-lg lg:shadow-zinc-200 lg:dark:shadow-zinc-800/80 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900 relative dark:outline-zinc-700",
         className
       )}
     >
-      {recommendedText && <RecommendedBadge recommended={recommendedText} />}
+      {recommendedText && !uniform && (
+        <RecommendedBadge recommended={recommendedText} />
+      )}
       <div
         className={cn(
           "flex flex-col h-full flex-grow",
-          isRecommended && "lg:translate-y-6"
+          isRecommended && !uniform && "lg:translate-y-6"
         )}
       >
         <div className="h-full">
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl font-bold px-6 ">{name}</h2>
             {description && (
-              <span className="text-sm text-muted-foreground px-6 h-8">
-                {description}
-              </span>
+              <div className="text-sm text-muted-foreground px-6 h-8">
+                <p className="line-clamp-2">{description}</p>
+              </div>
             )}
             <div className="mt-2 mb-6">
-              <h3 className="font-semibold text-md h-16 border-y flex items-center px-6">
-                <div>
+              <h3 className="font-semibold h-16 border-y flex items-center px-6">
+                <div className="line-clamp-2">
                   {isAnnual && priceAnnual
                     ? priceAnnual?.primaryText
                     : price.primaryText}{" "}
@@ -192,7 +201,12 @@ export const PricingCard = ({
             </div>
           )}
         </div>
-        <div className={cn(" px-6 ", isRecommended && "lg:-translate-y-12")}>
+        <div
+          className={cn(
+            " px-6 ",
+            isRecommended && !uniform && "lg:-translate-y-12"
+          )}
+        >
           <PricingCardButton
             recommended={recommendedText ? true : false}
             onClick={onButtonClick}

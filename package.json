@@ -6,10 +6,11 @@
     "dev": "npm run registry:build && next dev --turbopack",
     "build": "next build && npm run registry:build",
     "start": "next start",
-    "lint": "next lint", 
+    "lint": "next lint",
     "registry:build": "shadcn build --output public"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.11",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.2.2",

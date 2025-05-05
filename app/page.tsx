@@ -85,7 +85,6 @@ const dialogVariants = {
 };
 
 import { CodeEditor } from "@/components/landing/code-editor";
-import { DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 const geistMono = Geist_Mono({
@@ -134,7 +133,6 @@ export default function Home() {
       : PricingCardDev;
 
   const {
-    PricingDialog,
     PricingDialogTitle,
     Information,
     PriceItem,
@@ -255,10 +253,10 @@ export default function Home() {
                   )}
                 >
                   <PricingDialogTitle className="text-xl font-bold px-6">
-                    You've hit your credit limit
+                    Want more credits?
                   </PricingDialogTitle>
                   <Information>
-                    You're out of credits in the Free plan. Upgrade to Pro to
+                    You are out of credits in the Free plan. Upgrade to Pro to
                     get access to 2000 credits per month and more.
                   </Information>
                   <div className="px-2 pb-2 sm:px-6 pt-4 sm:pb-6">

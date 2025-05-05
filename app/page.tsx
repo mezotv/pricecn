@@ -243,10 +243,10 @@ export default function Home() {
                   <PricingCard key={product.id} productId={product.id} />
                 ))}
               </PricingTable>
-              <div className="flex flex-col md:flex-row gap-4 justify-between">
+              <div className="flex flex-col md:flex-row gap-4 justify-center">
                 <div
                   className={cn(
-                    "w-full max-w-xl border bg-background",
+                    "w-full h-fit max-w-xl border bg-background",
                     variant === "classic" && "rounded-lg",
                     variant === "clean" && "rounded-md",
                     variant === "dev" && "border border-primary"

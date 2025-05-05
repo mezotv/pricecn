@@ -1,12 +1,9 @@
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
+import { PricingCardButtonProps } from "../classic/pricing-table";
+import React from "react";
 
 export const PricingDialog = ({
   open,
@@ -175,28 +172,20 @@ export const TotalPrice = ({
   );
 };
 
-export const PricingDialogButton = ({
-  children,
-  size,
-  onClick,
-  disabled,
-  className,
-}: {
-  children: React.ReactNode;
-  size?: "sm" | "lg" | "default" | "icon";
-  onClick: () => void;
-  disabled?: boolean;
-  className?: string;
-}) => {
+export const PricingDialogButton = React.forwardRef<
+  HTMLButtonElement,
+  PricingCardButtonProps
+>(({ children, onClick, className, ...props }, ref) => {
   return (
     <Button
       onClick={onClick}
-      disabled={disabled}
-      size={size}
+      {...props}
+      ref={ref}
       className={cn(className, "font-mono rounded-none")}
     >
       {children}
       <Play className="!h-3" />
     </Button>
   );
-};
+});
+PricingDialogButton.displayName = "PricingDialogButton";

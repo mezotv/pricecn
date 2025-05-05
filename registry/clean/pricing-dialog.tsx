@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import React from "react";
 
 export const PricingDialog = ({
   open,
@@ -156,28 +157,22 @@ export const TotalPrice = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const PricingDialogButton = ({
-  children,
-  size,
-  onClick,
-  disabled,
-  className,
-}: {
-  children: React.ReactNode;
-  size?: "sm" | "lg" | "default" | "icon";
-  onClick: () => void;
-  disabled?: boolean;
-  className?: string;
-}) => {
+export const PricingDialogButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ children, onClick, disabled, size, className, ...props }, ref) => {
   return (
     <Button
       onClick={onClick}
       disabled={disabled}
       size={size}
+      ref={ref}
       className={cn(className, "")}
+      {...props}
     >
       {children}
       <ArrowRight className="!h-3" />
     </Button>
   );
-};
+});
+PricingDialogButton.displayName = "PricingDialogButton";

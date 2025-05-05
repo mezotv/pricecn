@@ -1,6 +1,16 @@
 import { cn } from "@/lib/utils";
-import { PricingTable, PricingCard } from "@/registry/classic/pricing-table";
-
+import {
+  PricingTable as PricingTableClassic,
+  PricingCard as PricingCardClassic,
+} from "@/registry/classic/pricing-table";
+import {
+  PricingTable as PricingTableClean,
+  PricingCard as PricingCardClean,
+} from "@/registry/clean/pricing-table";
+import {
+  PricingTable as PricingTableDev,
+  PricingCard as PricingCardDev,
+} from "@/registry/dev/pricing-table";
 import {
   PricingDialog as PricingDialogDev,
   PricingDialogTitle as PricingDialogTitleDev,
@@ -42,6 +52,8 @@ const dialogVariants = {
     PricingDialogFooter: PricingDialogFooterDev,
     TotalPrice: TotalPriceDev,
     PricingDialogButton: PricingDialogButtonDev,
+    PricingTable: PricingTableDev,
+    PricingCard: PricingCardDev,
   },
   classic: {
     PricingDialog: PricingDialogClassic,
@@ -52,6 +64,8 @@ const dialogVariants = {
     PricingDialogFooter: PricingDialogFooterClassic,
     TotalPrice: TotalPriceClassic,
     PricingDialogButton: PricingDialogButtonClassic,
+    PricingTable: PricingTableClassic,
+    PricingCard: PricingCardClassic,
   },
   clean: {
     PricingDialog: PricingDialogClean,
@@ -62,6 +76,8 @@ const dialogVariants = {
     PricingDialogFooter: PricingDialogFooterClean,
     TotalPrice: TotalPriceClean,
     PricingDialogButton: PricingDialogButtonClean,
+    PricingTable: PricingTableClean,
+    PricingCard: PricingCardClean,
   },
 };
 
@@ -84,10 +100,17 @@ export const PricingDialogShowcase = ({
     PricingDialogFooter,
     TotalPrice,
     PricingDialogButton,
+    PricingTable,
+    PricingCard,
   } = dialogVariants[variant];
 
+  const products = currentProducts.slice(1).map((product) => ({
+    ...product,
+    recommendedText: undefined,
+  }));
+  // console.log(products);
   return (
-    <div className="flex flex-col md:flex-row gap-4 justify-between">
+    <div className="flex flex-col md:flex-row gap-4 justify-center">
       <div
         className={cn(
           "w-full max-w-xl border bg-background",
@@ -109,11 +132,11 @@ export const PricingDialogShowcase = ({
               variant === "classic" &&
                 "shadow-none dark:bg-zinc-900 bg-stone-100"
             )}
-            products={currentProducts}
+            products={products}
             uniform={true}
             showFeatures={false}
           >
-            {currentProducts.slice(1).map((product) => (
+            {products.map((product) => (
               <PricingCard key={product.id} productId={product.id} />
             ))}
           </PricingTable>

@@ -65,6 +65,54 @@
           "target": "components/pricing/example.tsx"
         }
       ]
+    },
+    {
+      "name": "classic/pricing-dialog",
+      "type": "registry:component",
+      "title": "Pricing Dialog",
+      "description": "A pricing dialog component",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dialog"],
+      "files": [
+        {
+          "path": "registry/classic/pricing-dialog.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/pricing-dialog.tsx"
+        },
+        {
+          "path": "registry/classic/example.tsx",
+          "type": "registry:component",
+          "target": "components/pricing/example.tsx"
+        }
+      ]
+    },
+    {
+      "name": "clean/pricing-dialog",
+      "type": "registry:component",
+      "title": "Pricing Dialog",
+      "description": "A pricing dialog component",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dialog"],
+      "files": [
+        {
+          "path": "registry/clean/pricing-dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "dev/pricing-dialog",
+      "type": "registry:component",
+      "title": "Pricing Dialog",
+      "description": "A pricing dialog component",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dialog"],
+      "files": [
+        {
+          "path": "registry/dev/pricing-dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

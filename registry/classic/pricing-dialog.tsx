@@ -1,5 +1,10 @@
 import { cn } from "@/lib/utils";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import React from "react";
@@ -37,9 +42,9 @@ export const PricingDialogTitle = ({
   className?: string;
 }) => {
   return (
-    <h2 className={cn(className, "font-bold text-xl px-6 pt-4 pb-2")}>
+    <DialogTitle className={cn(className, "font-bold text-xl px-6 pt-4 pb-2")}>
       {children}
-    </h2>
+    </DialogTitle>
   );
 };
 

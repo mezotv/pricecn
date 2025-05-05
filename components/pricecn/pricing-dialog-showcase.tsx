@@ -93,7 +93,6 @@ export const PricingDialogShowcase = ({
   setQuantity: (quantity: number) => void;
 }) => {
   const {
-    PricingDialogTitle,
     Information,
     PriceItem,
     QuantityInput,
@@ -119,9 +118,15 @@ export const PricingDialogShowcase = ({
           variant === "dev" && "border border-primary"
         )}
       >
-        <PricingDialogTitle className="text-xl font-bold px-6">
+        <h2
+          className={cn(
+            "text-xl font-bold px-6 pt-4 pb-1",
+            variant === "dev" && "text-lg font-normal pb-0",
+            variant === "clean" && "text-sm font-medium uppercase pb-2"
+          )}
+        >
           Want more credits?
-        </PricingDialogTitle>
+        </h2>
         <Information>
           You are out of credits in the Free plan. Upgrade to Pro to get access
           to 2000 credits per month and more.
@@ -150,9 +155,15 @@ export const PricingDialogShowcase = ({
           variant === "dev" && "border border-primary"
         )}
       >
-        <PricingDialogTitle className="text-xl font-bold px-6">
+        <h2
+          className={cn(
+            "text-xl font-bold px-6 pt-4 pb-1",
+            variant === "dev" && "text-lg font-normal pb-0",
+            variant === "clean" && "text-sm font-medium uppercase pb-2"
+          )}
+        >
           Upgrade to Pro
-        </PricingDialogTitle>
+        </h2>
         <Information>
           By clicking confirm, you will subscribe to Pro and the following
           amount will be charged:

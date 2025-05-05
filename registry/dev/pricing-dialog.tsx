@@ -1,5 +1,10 @@
 import { cn } from "@/lib/utils";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { PricingCardButtonProps } from "../classic/pricing-table";
@@ -38,9 +43,9 @@ export const PricingDialogTitle = ({
   className?: string;
 }) => {
   return (
-    <h2 className={cn(className, "font-normal text-lg px-6 pt-3")}>
+    <DialogTitle className={cn(className, "font-normal text-lg px-6 pt-3")}>
       {children}
-    </h2>
+    </DialogTitle>
   );
 };
 

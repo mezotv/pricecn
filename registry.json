@@ -78,11 +78,6 @@
           "path": "registry/classic/pricing-dialog.tsx",
           "type": "registry:component",
           "target": "components/pricing/pricing-dialog.tsx"
-        },
-        {
-          "path": "registry/classic/example.tsx",
-          "type": "registry:component",
-          "target": "components/pricing/example.tsx"
         }
       ]
     },
@@ -96,7 +91,8 @@
       "files": [
         {
           "path": "registry/clean/pricing-dialog.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/pricing/pricing-dialog.tsx"
         }
       ]
     },
@@ -110,7 +106,8 @@
       "files": [
         {
           "path": "registry/dev/pricing-dialog.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/pricing/pricing-dialog.tsx"
         }
       ]
     }

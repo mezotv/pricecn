@@ -124,10 +124,10 @@ export const PricingCard = ({
   return (
     <div
       className={cn(
-        "w-full h-full py-6 text-foreground border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 ml-[-1px] -mt-[1px]",
+        "w-full h-full py-6 text-foreground border-l border-t lg:border-t-0 lg:first:border-l-0 lg:ml-0 -ml-px -mt-px",
         isRecommended &&
           !uniform &&
-          "lg:border-none lg:outline lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-lg lg:shadow-zinc-200 lg:dark:shadow-zinc-800/80 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900 relative dark:outline-zinc-700",
+          "lg:border-none lg:outline-solid lg:outline-1 lg:outline-border lg:-translate-y-6 lg:rounded-xl lg:shadow-lg lg:shadow-zinc-200 lg:dark:shadow-zinc-800/80 lg:h-[calc(100%+48px)] bg-stone-100 dark:bg-zinc-900 relative dark:outline-zinc-700",
         className
       )}
     >
@@ -136,7 +136,7 @@ export const PricingCard = ({
       )}
       <div
         className={cn(
-          "flex flex-col h-full flex-grow",
+          "flex flex-col h-full grow",
           isRecommended && !uniform && "lg:translate-y-6"
         )}
       >
@@ -166,7 +166,7 @@ export const PricingCard = ({
             </div>
           </div>
           {showFeatures && items.length > 0 && (
-            <div className="flex-grow px-6 mb-6">
+            <div className="grow px-6 mb-6">
               <PricingFeatureList
                 items={items}
                 showIcon={true}
@@ -211,7 +211,7 @@ export const PricingFeatureList = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex-grow", className)}>
+    <div className={cn("grow", className)}>
       {everythingFrom && (
         <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
       )}
@@ -219,7 +219,7 @@ export const PricingFeatureList = ({
         {items.map((item, index) => (
           <div key={index} className="flex items-start gap-2 text-sm">
             {showIcon && (
-              <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
             )}
             <div className="flex flex-col">
               <span>{item.primaryText}</span>
@@ -319,7 +319,7 @@ export const AnnualSwitch = ({
 
 export const RecommendedBadge = ({ recommended }: { recommended: string }) => {
   return (
-    <div className="bg-secondary absolute border text-muted-foreground text-sm font-medium lg:rounded-full px-3 lg:py-0.5 lg:top-4 lg:right-4 top-[-1px] right-[-1px] rounded-bl-lg">
+    <div className="bg-secondary absolute border text-muted-foreground text-sm font-medium lg:rounded-full px-3 lg:py-0.5 lg:top-4 lg:right-4 -top-px -right-px rounded-bl-lg">
       {recommended}
     </div>
   );

@@ -1,0 +1,129 @@
+---
+title: Pricing Table
+description: A set of pricing cards that detail the products you offer. Generates from a simple JSON product schema.
+---
+
+
+## Installation
+
+To install, run:
+
+<Tabs defaultValue="npm">
+  <TabsList>
+    <TabsTrigger value="npm">npm</TabsTrigger>
+    <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+    <TabsTrigger value="yarn">yarn</TabsTrigger>
+    <TabsTrigger value="bun">bun</TabsTrigger>
+  </TabsList>
+  <TabsContent value="npm">
+```bash
+npx shadcn@latest add https://pricecn.com/clean/pricing-table.json
+```
+  </TabsContent>
+  <TabsContent value="pnpm">
+    ```bash
+pnpm dlx shadcn@latest add https://pricecn.com/clean/pricing-table.json
+```
+  </TabsContent>
+  <TabsContent value="yarn">
+```bash
+yarn dlx shadcn@latest add https://pricecn.com/clean/pricing-table.json
+```
+  </TabsContent>
+  <TabsContent value="bun">
+```bash
+bunx --bun shadcn@latest add https://pricecn.com/clean/pricing-table.json
+```
+  </TabsContent>
+</Tabs>
+
+This will download the `pricing-table` component into your `/components` directory.  
+You can swap `clean` for `classic` or `dev` if you want to use a different style. View them all at [pricecn.com](/).
+
+---
+
+## Define Your Product Schema
+
+Pricing components can be involved and tricky to manage on the frontend, especially when pricing changes happen.  
+`pricing-table` can automatically generate based on a simple product schema you define.
+
+```typescript
+type Product = {
+  id: string, // An ID you'll pass into a <PricingCard> to render it.
+  name: string, // The name of the product (e.g., Pro).
+  description?: string, // Product description.
+  recommendedText?: string, // For emphasized products (e.g., "Best Value").
+  price: {
+    primaryText: string, // Product main price.
+    secondaryText?: string, // Pricing details (e.g., per user, per month).
+  },
+  priceAnnual?: {
+    primaryText: string, // Annual price variant.
+    secondaryText?: string, // Pricing details for the annual variant.
+  },
+  buttonText: string, // Text for the <PricingCard> button.
+  everythingFrom?: string, // Renders an "Everything from X, and" string.
+  items: {
+    primaryText: string, // Features available (e.g., 5 seats included).
+    secondaryText?: string, // Extra text, usually for pricing (e.g., then $10 USD per seat).
+  }[], // Items is an array.
+};
+```
+
+<Callout>
+  LLMs are good at auto-generating this schema from a screenshot!
+</Callout>
+
+---
+
+## Usage
+
+An example usage of `<PricingTable />` will be downloaded as `components/pricing/example.tsx`.  
+This file demonstrates how to define your products and pass them into the `PricingTable` component.
+
+```typescript
+import { PricingTable, PricingCard, Product } from "./pricing-table";
+
+export const products: Product[] = [
+  {
+    id: "hobby",
+    name: "Hobby",
+    description: "For personal projects and small-scale applications.",
+    price: { primaryText: "Free", secondaryText: "up to 3 users" },
+    buttonText: "Start deploying",
+    items: [
+      { primaryText: "Deploy full-stack apps in minutes" },
+      { primaryText: "Fully-managed datastores" },
+      // ...more features
+    ],
+  },
+  // ...more products
+];
+
+export const PricingTableExample = () => (
+  <PricingTable products={products} showFeatures={true}>
+    <PricingCard productId="hobby" />
+    <PricingCard productId="professional" />
+    <PricingCard
+      productId="enterprise"
+      buttonProps={{
+        onClick: () => {
+          console.log("Button Clicked");
+        },
+      }}
+    />
+  </PricingTable>
+);
+```
+<Callout>
+  `<PricingCard>` can also take in `buttonProps`, allowing you to define an `onClick()` function.
+</Callout>
+
+---
+
+## Coming Soon
+
+- Paywalls
+- Billing pages
+- Feature tables
+- Usage meters

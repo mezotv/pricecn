@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import './globals.css';
+import { RootProvider } from 'fumadocs-ui/provider';
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { ReactNode } from 'react';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,22 +13,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "pricecn by autumn",
-  description: "Craft beautiful, customizable, pricing components",
-};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
-      >
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );

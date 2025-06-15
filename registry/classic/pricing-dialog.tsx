@@ -177,10 +177,10 @@ export const PricingDialogButton = React.forwardRef<
       onClick={onClick}
       {...props}
       ref={ref}
-      className={cn(className, "shadow-sm shadow-stone-400")}
+      className={cn(className, "shadow-xs shadow-stone-400")}
     >
       {children}
-      <ArrowRight className="!h-3" />
+      <ArrowRight className="h-3!" />
     </Button>
   );
 });

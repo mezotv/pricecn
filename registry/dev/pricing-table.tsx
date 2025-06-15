@@ -119,7 +119,7 @@ export const PricingCard = ({
         "w-full h-full border border-background relative flex flex-col rounded-none z-0 text-foreground",
         isRecommended &&
           !uniform &&
-          "border-primary border-4 lg:border-t-[1px]",
+          "border-primary border-4 lg:border-t",
         className
       )}
     >
@@ -189,7 +189,7 @@ export const PricingFeatureList = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("pb-6 flex-grow", className)}>
+    <div className={cn("pb-6 grow", className)}>
       {everythingFrom && (
         <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
       )}
@@ -197,7 +197,7 @@ export const PricingFeatureList = ({
         {items.map((item, index) => (
           <div key={index} className="flex items-start gap-2 text-sm">
             {showIcon && (
-              <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
             )}
             <div className="flex flex-col">
               <span>{item.primaryText}</span>

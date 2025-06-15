@@ -189,7 +189,7 @@ export const PricingDialogButton = React.forwardRef<
       className={cn(className, "font-mono rounded-none")}
     >
       {children}
-      <Play className="!h-3" />
+      <Play className="h-3!" />
     </Button>
   );
 });

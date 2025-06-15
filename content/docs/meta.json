@@ -1,0 +1,9 @@
+{
+	"title:": "guide",
+	"root": true,
+	"pages": [
+		"index",
+        "components"
+	],
+    "defaultOpen": true
+}

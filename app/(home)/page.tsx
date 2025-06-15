@@ -1,8 +1,7 @@
 "use client";
-import * as React from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CommandBar } from "@/components/landing/command-bar";
-import { Geist_Mono, Geist } from "next/font/google";
+import { Geist } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
@@ -18,16 +17,12 @@ import {
   PricingCard as PricingCardClean,
   PricingTable as PricingTableClean,
 } from "@/registry/clean/pricing-table";
-import { products } from "@/registry/classic/example";
+import { products } from "@/lib/util/constant";
 
 import { CodeEditor } from "@/components/landing/code-editor";
 import { cn } from "@/lib/utils";
 import { PricingDialogShowcase } from "@/components/pricecn/pricing-dialog-showcase";
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+import { useState } from "react";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -35,19 +30,19 @@ const geist = Geist({
 });
 
 export default function Home() {
-  const [variant, setVariant] = React.useState("classic");
-  const [error, setError] = React.useState(false);
-  const [customConfig, setCustomConfig] = React.useState(
+  const [variant, setVariant] = useState("classic");
+  const [error, setError] = useState(false);
+  const [customConfig, setCustomConfig] = useState(
     JSON.stringify(products, null, 2)
   );
-  const [currentProducts, setCurrentProducts] = React.useState(products);
-  const [quantity, setQuantity] = React.useState(1);
+  const [currentProducts, setCurrentProducts] = useState(products.products);
+  const [quantity, setQuantity] = useState(1);
 
   const handleConfigChange = (value: string) => {
     try {
       setCustomConfig(value);
       const parsed = JSON.parse(value);
-      setCurrentProducts(parsed);
+      setCurrentProducts(parsed.products);
       setError(false);
     } catch (e: any) {
       console.warn("Invalid JSON", e);
@@ -72,11 +67,6 @@ export default function Home() {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center dark:bg-black">
       <div className="h-full w-full flex flex-col items-center gap-4 px-4 sm:px-8">
-        <nav className="py-4 flex w-full justify-between items-center max-w-7xl">
-          <div className={`${geistMono.className} text-2xl font-bold`}>
-            pricecn
-          </div>
-        </nav>
         <div className="h-full w-full flex flex-col items-center max-w-7xl">
           <div className="flex gap-6 flex-col md:flex-row md:gap-12 justify-between w-full">
             <div className="flex flex-col gap-8 w-full justify-center max-w-[500px]">
@@ -98,22 +88,13 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
-                  onClick={() => {
-                    window.open("https://docs.pricecn.com", "_blank");
-                  }}
                 >
-                  <Link href="https://docs.pricecn.com" target="_blank">
+                  <Link href="/docs">
                     Docs
                   </Link>
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => {
-                    window.open(
-                      "https://github.com/useautumn/pricecn",
-                      "_blank"
-                    );
-                  }}
                 >
                   <Link
                     href="https://github.com/useautumn/pricecn"
@@ -161,7 +142,7 @@ export default function Home() {
               <PricingTable
                 className={cn(
                   variant === "classic" &&
-                    "bg-white bg-gradient-to-br from-background to-stone-50 dark:from-background/95 dark:to-background"
+                    "bg-white bg-linear-to-br from-background to-stone-50 dark:from-background/95 dark:to-background"
                 )}
                 products={currentProducts}
                 showFeatures={true}

@@ -176,7 +176,7 @@ export const PricingDialogButton = React.forwardRef<
       {...props}
     >
       {children}
-      <ArrowRight className="!h-3" />
+      <ArrowRight className="h-3!" />
     </Button>
   );
 });

@@ -165,7 +165,7 @@ export const PricingCard = ({
           </div>
         </div>
         {showFeatures && items.length > 0 && (
-          <div className="flex-grow">
+          <div className="grow">
             <PricingFeatureList
               items={items}
               showIcon={true}
@@ -194,7 +194,7 @@ export const PricingFeatureList = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("pb-6 flex-grow", className)}>
+    <div className={cn("pb-6 grow", className)}>
       {everythingFrom && (
         <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
       )}
@@ -202,7 +202,7 @@ export const PricingFeatureList = ({
         {items.map((item, index) => (
           <div key={index} className="flex items-start gap-2 text-sm">
             {showIcon && (
-              <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+              <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
             )}
             <div className="flex flex-col">
               <span>{item.primaryText}</span>
@@ -296,7 +296,7 @@ export const AnnualSwitch = ({
 
 export const RecommendedBadge = ({ recommended }: { recommended: string }) => {
   return (
-    <div className="bg-primary absolute w-fit border text-primary-foreground flex items-center justify-center text-xs uppercase font-medium lg:rounded-full px-3 py-0.5 lg:top-3 lg:right-3 -top-[1px] -right-[1px] rounded-bl-md">
+    <div className="bg-primary absolute w-fit border text-primary-foreground flex items-center justify-center text-xs uppercase font-medium lg:rounded-full px-3 py-0.5 lg:top-3 lg:right-3 -top-px -right-px rounded-bl-md">
       {recommended}
     </div>
   );

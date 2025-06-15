@@ -6,15 +6,17 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
-import type { Product } from "@/types/product";
+import type {
+  AnnualSwitchProps,
+  PricingCardButtonProps,
+  PricingCardProps,
+  PricingFeatureListProps,
+  PricingTableContextProps,
+  PricingTableProps,
+  RecommendedBadgeProps,
+} from "@/types/pricing-table";
 
-const PricingTableContext = createContext<{
-  isAnnual: boolean;
-  setIsAnnual: (isAnnual: boolean) => void;
-  products: Product[];
-  showFeatures: boolean;
-  uniform: boolean;
-}>({
+const PricingTableContext = createContext<PricingTableContextProps>({
   isAnnual: false,
   setIsAnnual: () => {},
   products: [],
@@ -38,17 +40,11 @@ export const PricingTable = ({
   showFeatures = true,
   className,
   uniform = false,
-}: {
-  children?: React.ReactNode;
-  products?: Product[];
-  showFeatures?: boolean;
-  className?: string;
-  uniform?: boolean;
-}) => {
+}: PricingTableProps) => {
   const [isAnnual, setIsAnnual] = useState(false);
 
   if (!products) {
-    throw new Error("products is required in <PricingTable />");
+    throw new Error("Product is required in <PricingTable />");
   }
 
   return (
@@ -77,13 +73,6 @@ export const PricingTable = ({
     </PricingTableContext.Provider>
   );
 };
-
-interface PricingCardProps {
-  productId: string;
-  className?: string;
-  onButtonClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  buttonProps?: React.ComponentProps<"button">;
-}
 
 export const PricingCard = ({
   productId,
@@ -179,19 +168,17 @@ export const PricingFeatureList = ({
   showIcon = true,
   everythingFrom,
   className,
-}: {
-  items: {
-    primaryText: string;
-    secondaryText?: string;
-  }[];
-  showIcon?: boolean;
-  everythingFrom?: string;
-  className?: string;
-}) => {
+  translations = {
+    everythingFromPlus: "Everything from ${everythingFrom}, plus:",
+  }
+}: PricingFeatureListProps) => {
   return (
     <div className={cn("pb-6 grow", className)}>
       {everythingFrom && (
-        <p className="text-sm mb-4">Everything from {everythingFrom}, plus:</p>
+        <p className="text-sm mb-4">{translations.everythingFromPlus?.replace(
+          /\$\{everythingFrom\}/g,
+          everythingFrom
+        )}</p>
       )}
       <div className="space-y-3">
         {items.map((item, index) => (
@@ -215,11 +202,6 @@ export const PricingFeatureList = ({
 };
 
 // Pricing Card Button
-export interface PricingCardButtonProps extends React.ComponentProps<"button"> {
-  recommended?: boolean;
-  buttonUrl?: string;
-}
-
 export const PricingCardButton = React.forwardRef<
   HTMLButtonElement,
   PricingCardButtonProps
@@ -267,28 +249,31 @@ export const PricingCardButton = React.forwardRef<
   );
 });
 PricingCardButton.displayName = "PricingCardButton";
+
 // Annual Switch
 export const AnnualSwitch = ({
   isAnnual,
   setIsAnnual,
-}: {
-  isAnnual: boolean;
-  setIsAnnual: (isAnnual: boolean) => void;
-}) => {
+  translations = {
+    monthly: "Monthly",
+    annual: "Annual",
+    }
+  }: AnnualSwitchProps) => {
   return (
     <div className="flex items-center space-x-2 mb-4">
-      <span className="text-sm text-muted-foreground">Monthly</span>
+      <span className="text-sm text-muted-foreground">{translations.monthly}</span>
       <Switch
         id="annual-billing"
         checked={isAnnual}
         onCheckedChange={setIsAnnual}
       />
-      <span className="text-sm text-muted-foreground">Annual</span>
+      <span className="text-sm text-muted-foreground">{translations.annual}</span>
     </div>
   );
 };
 
-export const RecommendedBadge = ({ recommended }: { recommended: string }) => {
+// Recommended Badge
+export const RecommendedBadge = ({ recommended }: RecommendedBadgeProps) => {
   return (
     <div
       className={cn(

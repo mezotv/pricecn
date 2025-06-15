@@ -1,0 +1,9 @@
+{
+    "title": "Sus",
+    "description": "Components you can use to build the next big thing.",
+    "root": true,
+    "pages": [
+      "---Introduction---",
+      "index"
+    ]
+  }

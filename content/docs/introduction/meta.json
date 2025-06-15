@@ -1,9 +1,0 @@
-{
-    "title": "Framework",
-    "description": "The docs framework",
-    "root": true,
-    "pages": [
-      "---Introduction---",
-      "index"
-    ]
-  }

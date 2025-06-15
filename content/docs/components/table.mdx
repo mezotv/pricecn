@@ -47,26 +47,27 @@ Pricing components can be involved and tricky to manage on the frontend, especia
 `pricing-table` can automatically generate based on a simple product schema you define.
 
 ```typescript
-type Product = {
+interface ProductItem {
+  primaryText: string;
+  secondaryText?: string;
+}
+
+interface Product {
   id: string, // An ID you'll pass into a <PricingCard> to render it.
   name: string, // The name of the product (e.g., Pro).
   description?: string, // Product description.
-  recommendedText?: string, // For emphasized products (e.g., "Best Value").
-  price: {
-    primaryText: string, // Product main price.
-    secondaryText?: string, // Pricing details (e.g., per user, per month).
-  },
-  priceAnnual?: {
-    primaryText: string, // Annual price variant.
-    secondaryText?: string, // Pricing details for the annual variant.
-  },
-  buttonText: string, // Text for the <PricingCard> button.
   everythingFrom?: string, // Renders an "Everything from X, and" string.
-  items: {
-    primaryText: string, // Features available (e.g., 5 seats included).
-    secondaryText?: string, // Extra text, usually for pricing (e.g., then $10 USD per seat).
-  }[], // Items is an array.
-};
+
+  buttonText?: string, // Text for the <PricingCard> button.
+  buttonUrl?: string, // Optional URL for the button.
+
+  recommendedText?: string, // For emphasized products (e.g., "Best Value").
+
+  price: ProductItem, // Primary pricing details, e.g., "$10/month".
+  priceAnnual?: ProductItem, // Optional annual pricing details.
+
+  items: ProductItem[], // List of features or items included in the product.
+}
 ```
 
 <Callout>
@@ -81,10 +82,12 @@ An example usage of `<PricingTable />` will be downloaded as `components/pricing
 This file demonstrates how to define your products and pass them into the `PricingTable` component.
 
 ```typescript
-import { PricingTable, PricingCard, Product } from "./pricing-table";
+import { PricingTable, PricingCard } from "./pricing-table";
+import type { Product } from "@/types/product";
 
-export const products: Product[] = [
-  {
+export const data: ProductsSchema = {
+  "$schema": "https://www.pricecn.com/schemas/pricing.schema.json",
+  "products": [{
     id: "hobby",
     name: "Hobby",
     description: "For personal projects and small-scale applications.",
@@ -94,13 +97,13 @@ export const products: Product[] = [
       { primaryText: "Deploy full-stack apps in minutes" },
       { primaryText: "Fully-managed datastores" },
       // ...more features
-    ],
-  },
-  // ...more products
-];
+    ]
+  }, // ...more products
+  ]
+};
 
 export const PricingTableExample = () => (
-  <PricingTable products={products} showFeatures={true}>
+  <PricingTable products={data.products} showFeatures={true}>
     <PricingCard productId="hobby" />
     <PricingCard productId="professional" />
     <PricingCard
@@ -126,3 +129,5 @@ export const PricingTableExample = () => (
 - Billing pages
 - Feature tables
 - Usage meters
+
+

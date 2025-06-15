@@ -1,4 +1,12 @@
 {
-    "pages": ["introduction", "components"]
-  }
-  
+  "title": "Pricecn",
+  "description": "",
+  "icon": "Building",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "---UI---",
+    "components"
+  ]
+}

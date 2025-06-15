@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { PricingCard, PricingTable, Product } from "./pricing-table";
+import { PricingCard, PricingTable } from "./pricing-table";
+import type { Product } from "@/types/product";
 
 export const products: Product[] = [
   {

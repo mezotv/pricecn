@@ -6,34 +6,7 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Check, Loader2 } from "lucide-react";
-
-// Update Product interface to match dev/classic
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  everythingFrom?: string;
-
-  buttonText?: string;
-  buttonUrl?: string;
-
-  recommendedText?: string;
-
-  price: {
-    primaryText: string;
-    secondaryText?: string;
-  };
-
-  priceAnnual?: {
-    primaryText: string;
-    secondaryText?: string;
-  };
-
-  items: {
-    primaryText: string;
-    secondaryText?: string;
-  }[];
-}
+import type { Product } from "@/types/product";
 
 // Update context to include showFeatures
 const PricingTableContext = createContext<{

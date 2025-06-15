@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "pricecn",
-  description: "Beautiful, customizable, pricing components",
+  title: "pricecn by autumn",
+  description: "Craft beautiful, customizable, pricing components",
 };
 
 export default function RootLayout({

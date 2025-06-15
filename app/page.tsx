@@ -72,11 +72,11 @@ export default function Home() {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center dark:bg-black">
       <div className="h-full w-full flex flex-col items-center gap-4 px-4 sm:px-8">
-        <div className="py-4 flex w-full justify-between items-center">
+        <nav className="py-4 flex w-full justify-between items-center max-w-7xl">
           <div className={`${geistMono.className} text-2xl font-bold`}>
             pricecn
           </div>
-        </div>
+        </nav>
         <div className="h-full w-full flex flex-col items-center max-w-7xl">
           <div className="flex gap-6 flex-col md:flex-row md:gap-12 justify-between w-full">
             <div className="flex flex-col gap-8 w-full justify-center max-w-[500px]">

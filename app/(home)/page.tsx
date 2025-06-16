@@ -165,6 +165,10 @@ export default function Home() {
           <a href="https://useautumn.com" target="_blank" className="underline">
             Autumn
           </a>
+          and
+          <a href="https://github.com/mezotv" target="_blank" className="underline">
+            Dominik
+          </a>
         </div>
       </div>
     </div>

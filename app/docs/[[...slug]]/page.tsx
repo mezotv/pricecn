@@ -8,7 +8,9 @@ import {
 import { notFound } from "next/navigation";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { getMDXComponents } from "@/mdx-components";
-import { getGithubLastEdit } from 'fumadocs-core/server';
+import { getGithubLastEdit, getPageTreePeers } from 'fumadocs-core/server';
+import type { Metadata } from "next";
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -41,35 +43,59 @@ export default async function Page(props: {
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths
             a: createRelativeLink(source, page),
+            DocsCategory: ({ url }) => {
+              return <DocsCategory url={url ?? page.url} />;
+            },
           })}
+          
         />
       </DocsBody>
     </DocsPage>
   );
 }
 
+function DocsCategory({ url }: { url: string }) {
+  return (
+    <Cards>
+      {getPageTreePeers(source.pageTree, url).map((peer) => (
+        <Card key={peer.url} title={peer.name} href={peer.url}>
+          {peer.description}
+        </Card>
+      ))}
+    </Cards>
+  );
+}
+
+
 export async function generateStaticParams() {
   return source.generateParams();
 }
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
-  const params = await props.params;
-  const { slug = [] } = await params;
-  const page = source.getPage(params.slug);
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const { slug = [] } = await props.params;
+  const page = source.getPage(slug);
   if (!page) notFound();
 
-  const image = ['/og', ...slug, 'image.png'].join('/');
+
+  const description = page.data.description || 'Build beautiful pricing pages with pricecn, the open-source pricing component library.';
+
+  const image = {
+    url: ['/og', ...slug, 'image.png'].join('/'),
+    width: 1200,
+    height: 630,
+  };
+
   return {
     title: page.data.title,
-    description: page.data.description,
+    description,
     openGraph: {
-      images: image,
+      images: [image],
     },
     twitter: {
       card: 'summary_large_image',
-      images: image,
+      images: [image],
     },
   };
 }

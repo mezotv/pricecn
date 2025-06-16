@@ -2,7 +2,7 @@ import './globals.css';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +13,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' },
+    { media: '(prefers-color-scheme: light)', color: '#fff' },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pricecn.com'),

@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#0A0A0A' },
-    { media: '(prefers-color-scheme: light)', color: '#fff' },
-  ],
-};
+  themeColor: '#b52ba5',
+  maximumScale: 5,
+  minimumScale: 1,
+  initialScale: 1,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pricecn.com'),

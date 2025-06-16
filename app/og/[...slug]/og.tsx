@@ -28,7 +28,7 @@ export function generateOGImage(
 }
 
 export function generate({
-  primaryTextColor = 'rgb(255,150,255)',
+  primaryTextColor,
   ...props
 }: GenerateProps): ReactElement {
   return (
@@ -77,32 +77,7 @@ export function generate({
             color: primaryTextColor,
           }}
         >
-          <svg
-            width="60"
-            height="60"
-            viewBox="0 0 180 180"
-            filter="url(#logo-shadow)"
-          >
-            <circle cx="90" cy="90" r="86" fill="url(#logo-iconGradient)" />
-            <defs>
-              <filter id="logo-shadow" colorInterpolationFilters="sRGB">
-                <feDropShadow
-                  dx="0"
-                  dy="0"
-                  stdDeviation="4"
-                  floodColor="white"
-                  floodOpacity="1"
-                />
-              </filter>
-              <linearGradient
-                id="logo-iconGradient"
-                gradientTransform="rotate(45)"
-              >
-                <stop offset="45%" stopColor="black" />
-                <stop offset="100%" stopColor="white" />
-              </linearGradient>
-            </defs>
-          </svg>
+          <img src="https://pricecn.com/images/autumn.webp" height="85" width="53" alt="Autumn logo" />
           <p
             style={{
               fontSize: '46px',

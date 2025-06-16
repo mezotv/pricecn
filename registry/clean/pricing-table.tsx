@@ -14,7 +14,7 @@ import type {
   PricingTableContextProps,
   PricingTableProps,
   RecommendedBadgeProps,
-} from "@/types/pricing-table";
+} from "@/types/pricing/pricing-table";
 
 const PricingTableContext = createContext<PricingTableContextProps>({
   isAnnual: false,
@@ -166,7 +166,6 @@ export const PricingCard = ({
   );
 };
 
-// Pricing Feature List
 export const PricingFeatureList = ({
   items,
   showIcon = true,
@@ -205,7 +204,6 @@ export const PricingFeatureList = ({
   );
 };
 
-// Pricing Card Button
 export const PricingCardButton = React.forwardRef<
   HTMLButtonElement,
   PricingCardButtonProps
@@ -254,7 +252,6 @@ export const PricingCardButton = React.forwardRef<
 });
 PricingCardButton.displayName = "PricingCardButton";
 
-// Annual Switch
 export const AnnualSwitch = ({
   isAnnual,
   setIsAnnual,
@@ -280,7 +277,6 @@ export const AnnualSwitch = ({
   );
 };
 
-// Recommended Badge
 export const RecommendedBadge = ({ recommended }: RecommendedBadgeProps) => {
   return (
     <div className="bg-primary absolute w-fit border text-primary-foreground flex items-center justify-center text-xs uppercase font-medium lg:rounded-full px-3 py-0.5 lg:top-3 lg:right-3 -top-px -right-px rounded-bl-md">

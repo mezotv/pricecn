@@ -88,7 +88,7 @@ export async function generateMetadata(props: {
   };
 
   return {
-    title: page.data.title,
+    title: page.data.title +  " | pricecn",
     description,
     openGraph: {
       images: [image],

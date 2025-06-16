@@ -15,7 +15,7 @@ import type {
   QuantityProps,
   PricingDialogFooterProps,
   TotalPriceProps,
-} from "@/types/pricing-dialog";
+} from "@/types/pricing/pricing-dialog";
 import { forwardRef } from "react";
 
 export const PricingDialog = ({

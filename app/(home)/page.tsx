@@ -166,8 +166,8 @@ export default function Home() {
             Autumn
           </a>
           and
-          <a href="https://github.com/mezotv" target="_blank" className="underline">
-            Dominik
+          <a href="https://github.com/useautumn/pricecn/graphs/contributors" target="_blank" className="underline">
+            Contributors
           </a>
         </div>
       </div>

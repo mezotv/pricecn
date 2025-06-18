@@ -77,7 +77,7 @@ export function generate({
             color: primaryTextColor,
           }}
         >
-          <img src="https://pricecn.com/images/autumn.webp" height="85" width="53" alt="Autumn logo" />
+          <img src="https://pricecn.com/images/autumn.png" height="85" width="53" alt="Autumn logo" />
           <p
             style={{
               fontSize: '46px',

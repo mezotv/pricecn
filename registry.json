@@ -20,8 +20,13 @@
           "target": "components/pricing/pricing-table.tsx"
         },
         {
+          "path": "types/pricing/pricing-table.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-table.ts"
+        },
+        {
           "path": "registry/classic/example.tsx",
-          "type": "registry:component",
+          "type": "registry:block",
           "target": "components/pricing/example.tsx"
         }
       ]
@@ -40,6 +45,16 @@
         {
           "path": "registry/dev/pricing-table.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "types/pricing/pricing-table.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-table.ts"
+        },
+        {
+          "path": "registry/dev/example.tsx",
+          "type": "registry:block",
+          "target": "components/pricing/example.tsx"
         }
       ]
     },
@@ -60,8 +75,13 @@
           "target": "components/pricing/pricing-table.tsx"
         },
         {
+          "path": "types/pricing/pricing-table.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-table.ts"
+        },
+        {
           "path": "registry/clean/example.tsx",
-          "type": "registry:component",
+          "type": "registry:block",
           "target": "components/pricing/example.tsx"
         }
       ]
@@ -78,6 +98,11 @@
           "path": "registry/classic/pricing-dialog.tsx",
           "type": "registry:component",
           "target": "components/pricing/pricing-dialog.tsx"
+        },
+        {
+          "path": "types/pricing/pricing-dialog.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-dialog.ts"
         }
       ]
     },
@@ -93,6 +118,11 @@
           "path": "registry/clean/pricing-dialog.tsx",
           "type": "registry:component",
           "target": "components/pricing/pricing-dialog.tsx"
+        },
+        {
+          "path": "types/pricing/pricing-dialog.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-dialog.ts"
         }
       ]
     },
@@ -108,6 +138,11 @@
           "path": "registry/dev/pricing-dialog.tsx",
           "type": "registry:component",
           "target": "components/pricing/pricing-dialog.tsx"
+        },
+        {
+          "path": "types/pricing/pricing-dialog.ts",
+          "type": "registry:lib",
+          "target": "types/pricing/pricing-dialog.ts"
         }
       ]
     }

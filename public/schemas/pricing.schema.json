@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": ["id", "name", "description", "price", "buttonText", "items"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "recommendedText": { "type": "string" },
+        "price": {
+          "type": "object",
+          "required": ["primaryText", "secondaryText"],
+          "properties": {
+            "primaryText": { "type": "string" },
+            "secondaryText": { "type": "string" }
+          }
+        },
+        "priceAnnual": {
+          "type": "object",
+          "required": ["primaryText", "secondaryText"],
+          "properties": {
+            "primaryText": { "type": "string" },
+            "secondaryText": { "type": "string" }
+          }
+        },
+        "buttonText": { "type": "string" },
+        "everythingFrom": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["primaryText"],
+            "properties": {
+              "primaryText": { "type": "string" },
+              "secondaryText": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }

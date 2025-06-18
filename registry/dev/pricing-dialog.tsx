@@ -7,20 +7,23 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
-import { PricingCardButtonProps } from "../classic/pricing-table";
-import React from "react";
+import type {
+  InformationProps,
+  PriceItemProps,
+  PricingDialogProps,
+  PricingDialogTitleProps,
+  QuantityProps,
+  PricingDialogFooterProps,
+  TotalPriceProps,
+} from "@/types/pricing/pricing-dialog";
+import { forwardRef } from "react";
 
 export const PricingDialog = ({
   open,
   setOpen,
   children,
   className,
-}: {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  children: React.ReactNode;
-  className?: string;
-}) => {
+}: PricingDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -38,10 +41,7 @@ export const PricingDialog = ({
 export const PricingDialogTitle = ({
   children,
   className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
+}: PricingDialogTitleProps) => {
   return (
     <DialogTitle className={cn(className, "font-normal text-lg px-6 pt-3")}>
       {children}
@@ -49,13 +49,7 @@ export const PricingDialogTitle = ({
   );
 };
 
-export const Information = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
+export const Information = ({ children, className }: InformationProps) => {
   return (
     <div
       className={cn(
@@ -72,10 +66,7 @@ export const PriceItem = ({
   children,
   className,
   ...props
-}: {
-  children: React.ReactNode;
-  className?: string;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+}: PriceItemProps & React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       className={cn(
@@ -95,12 +86,7 @@ export const QuantityInput = ({
   value,
   className,
   ...props
-}: {
-  children: React.ReactNode;
-  value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+}: QuantityProps & React.HTMLAttributes<HTMLDivElement>) => {
   const currentValue = Number(value) || 0;
 
   const handleValueChange = (newValue: number) => {
@@ -142,10 +128,7 @@ export const QuantityInput = ({
 export const PricingDialogFooter = ({
   children,
   className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
+}: PricingDialogFooterProps) => {
   return (
     <DialogFooter
       className={cn(
@@ -158,13 +141,7 @@ export const PricingDialogFooter = ({
   );
 };
 
-export const TotalPrice = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
+export const TotalPrice = ({ children, className }: TotalPriceProps) => {
   return (
     <div
       className={cn(
@@ -177,9 +154,9 @@ export const TotalPrice = ({
   );
 };
 
-export const PricingDialogButton = React.forwardRef<
+export const PricingDialogButton = forwardRef<
   HTMLButtonElement,
-  PricingCardButtonProps
+  React.ComponentProps<typeof Button>
 >(({ children, onClick, className, ...props }, ref) => {
   return (
     <Button
@@ -189,7 +166,7 @@ export const PricingDialogButton = React.forwardRef<
       className={cn(className, "font-mono rounded-none")}
     >
       {children}
-      <Play className="!h-3" />
+      <Play className="h-3!" />
     </Button>
   );
 });

@@ -1,0 +1,11 @@
+{
+  "title": "Pricecn",
+  "description": "A set of open source components to power your billing and pricing experience",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "---UI---",
+    "components"
+  ]
+}

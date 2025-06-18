@@ -3,6 +3,7 @@ import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prism-themes/themes/prism-vsc-dark-plus.css";
+import { CornerRightDown } from "lucide-react";
 
 const hightlightWithLineNumbers = (input: string, language: string) =>
   highlight(input, language)
@@ -29,8 +30,8 @@ export const CodeEditor = ({
         <div className="h-10 translate-y-2 flex items-center pb-3 text-sm bg-transparent text-muted-foreground z-0">
           Try me
           <span className="hidden sm:inline">&nbsp;with your own products</span>
-          ! &nbsp;
-          <span className="translate-y-1 ml-1">↴</span>
+          !
+          <CornerRightDown className="translate-y-1 ml-1" size={14} />
         </div>
       )}
       <div className="overflow-scroll z-10 max-h-[450px] rounded-md border bg-zinc-900 shadow-lg shadow-black/60 border-zinc-700 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#18181b] [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-thumb]:rounded-md overflow-x-hidden">
@@ -52,8 +53,8 @@ export const CodeEditor = ({
           onValueChange={handleConfigChange}
           highlight={(code) => hightlightWithLineNumbers(code, languages.js)}
           padding={10}
-          textareaClassName="focus:outline-none !pl-12"
-          preClassName="!pl-12"
+          textareaClassName="focus:outline-hidden pl-12!"
+          preClassName="pl-12!"
           style={{
             fontFamily: "monospace",
             fontSize: 11,

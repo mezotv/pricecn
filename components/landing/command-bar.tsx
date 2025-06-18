@@ -22,8 +22,8 @@ export function CommandBar({ variant }: { variant: string }) {
       <div
         className="absolute -inset-[1.8px] rounded-md opacity-100 transition-opacity duration-300
         before:absolute before:inset-0 before:rounded-md
-        before:bg-gradient-to-r before:from-transparent before:via-gray-400/60 before:to-transparent dark:before:via-gray-300/40
-         before:animate-shine before:bg-[length:200%_100%]"
+        before:bg-linear-to-r before:from-transparent before:via-gray-400/60 before:to-transparent dark:before:via-gray-300/40
+         before:animate-shine before:bg-size-[200%_100%]"
       />
 
       <button
